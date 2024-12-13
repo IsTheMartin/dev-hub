@@ -1,6 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id(libs.plugins.kotlin.kapt.get().pluginId)
+    alias(libs.plugins.dagger.hilt)
+    id(libs.plugins.google.services.get().pluginId)
+    id(libs.plugins.detekt.get().pluginId)
 }
 
 android {
@@ -59,6 +63,15 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.dagger.hilt.android)
+    implementation(libs.hilt.navigation.compose)
+    implementation(libs.lottie.compose)
+    implementation(libs.google.gson)
+    kapt(libs.dagger.hilt.android.compiler)
+    implementation (platform(libs.google.firebase.bom))
+    implementation (libs.google.firebase.database)
+    implementation (libs.google.firebase.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

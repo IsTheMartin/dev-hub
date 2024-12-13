@@ -1,4 +1,4 @@
-package com.mrtnmrls.devhub.ui.theme
+package com.mrtnmrls.devhub.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build
@@ -12,15 +12,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = Camel,
+    secondary = Khaki,
+    tertiary = MetallicBlue,
+    background = CetaceanBlue,
+    surface = CetaceanBlue
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+    primary = CetaceanBlue,
+    secondary = MorningBlue,
+    tertiary = Camel
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),

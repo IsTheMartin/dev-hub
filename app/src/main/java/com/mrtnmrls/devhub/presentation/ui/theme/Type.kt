@@ -1,4 +1,4 @@
-package com.mrtnmrls.devhub.ui.theme
+package com.mrtnmrls.devhub.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

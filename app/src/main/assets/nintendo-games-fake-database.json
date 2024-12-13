@@ -1,0 +1,64 @@
+{
+  "nintendoSwitch": [
+    {
+      "name": "Metro 2033 Redux",
+      "url": "https://www.igdb.com/games/metro-2033-redux",
+      "image": "https://images.igdb.com/igdb/image/upload/t_cover_big/co2e1s.webp"
+    },
+    {
+      "name": "Metamorphosis",
+      "url": "https://www.igdb.com/games/metamorphosis",
+      "image": "https://images.igdb.com/igdb/image/upload/t_cover_big/co2dfj.webp"
+    },
+    {
+      "name": "Sniper Elite 3",
+      "url": "https://www.igdb.com/games/sniper-elite-iii",
+      "image": "https://images.igdb.com/igdb/image/upload/t_cover_big/co2e40.webp"
+    },
+    {
+      "name": "Pizza Possum",
+      "url": "https://www.igdb.com/games/pizza-possum",
+      "image": "https://images.igdb.com/igdb/image/upload/t_cover_big/co6aj9.webp"
+    },
+    {
+      "name": "Hogwarts Legacy",
+      "url": "https://www.igdb.com/games/hogwarts-legacy-deluxe-edition",
+      "image": "https://images.igdb.com/igdb/image/upload/t_cover_big/co7lbo.webp"
+    },
+    {
+      "name": "EA FC 24",
+      "url": "https://www.igdb.com/games/ea-sports-fc-24",
+      "image": "https://images.igdb.com/igdb/image/upload/t_cover_big/co6qqa.webp"
+    },
+    {
+      "name": "Moving Out",
+      "url": "https://www.igdb.com/games/moving-out-deluxe-edition",
+      "image": "https://images.igdb.com/igdb/image/upload/t_cover_big/co5rne.webp"
+    },
+    {
+      "name": "BioShock Remastered",
+      "url": "https://www.igdb.com/games/bioshock-remastered",
+      "image": "https://images.igdb.com/igdb/image/upload/t_cover_big/co54yu.webp"
+    },
+    {
+      "name": "Dark Souls: Remastered",
+      "url": "https://www.igdb.com/games/dark-souls-remastered",
+      "image": "https://images.igdb.com/igdb/image/upload/t_cover_big/co2uro.webp"
+    },
+    {
+      "name": "The Legend of Zelda: Tears of the Kingdom",
+      "url": "https://www.igdb.com/games/the-legend-of-zelda-tears-of-the-kingdom",
+      "image": "https://images.igdb.com/igdb/image/upload/t_cover_big/co5vmg.webp"
+    },
+    {
+      "name": "The Legend of Zelda: Breath of the Wild",
+      "url": "https://www.igdb.com/games/the-legend-of-zelda-breath-of-the-wild",
+      "image": "https://images.igdb.com/igdb/image/upload/t_cover_big/co3p2d.webp"
+    },
+    {
+      "name": "FIFA 23",
+      "url": "https://www.igdb.com/games/fifa-23-legacy-edition",
+      "image": "https://images.igdb.com/igdb/image/upload/t_cover_big/co54gp.webp"
+    }
+  ]
+}
