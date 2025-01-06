@@ -4,7 +4,7 @@ This is a Android project that contains a collection of multiple features, good 
 
 ## Roadmap
 
-- [ ] UI state (loading, error resiliency, pull to refresh and content)
+- [x] UI state (loading, error resiliency, pull to refresh and content)
 - [ ] Crop image feature
 - [ ] Animations
 - [ ] Obsidian quick note capture
