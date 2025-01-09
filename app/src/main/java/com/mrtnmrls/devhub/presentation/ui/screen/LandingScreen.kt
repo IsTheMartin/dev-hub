@@ -3,17 +3,19 @@ package com.mrtnmrls.devhub.presentation.ui.screen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -22,18 +24,24 @@ import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.mrtnmrls.devhub.presentation.common.ProfileDialog
 import com.mrtnmrls.devhub.presentation.ui.effect.LandingEffect
 import com.mrtnmrls.devhub.presentation.ui.intent.DevHubRouteIntent
 import com.mrtnmrls.devhub.presentation.ui.intent.LandingIntent
 import com.mrtnmrls.devhub.presentation.ui.route.DevHubRoute
 import com.mrtnmrls.devhub.presentation.ui.route.navigateToChristmasLightsScreen
 import com.mrtnmrls.devhub.presentation.ui.route.navigateToPullToRefreshScreen
+import com.mrtnmrls.devhub.presentation.ui.state.LandingState
+import com.mrtnmrls.devhub.presentation.ui.state.ProfileDialogState
 import com.mrtnmrls.devhub.presentation.ui.theme.Camel
 import com.mrtnmrls.devhub.presentation.ui.theme.CetaceanBlue
 import com.mrtnmrls.devhub.presentation.ui.theme.DevhubTheme
@@ -49,6 +57,7 @@ fun LandingContainer(
     val viewModel = hiltViewModel<LandingViewModel>()
     val state by viewModel.state.collectAsStateWithLifecycle()
     LandingScreen(
+        state = state,
         onLandingIntent = viewModel::dispatchIntent,
         onIntent = { handleLandingIntents(it, navController) }
     )
@@ -80,9 +89,13 @@ fun HandleLandingEffects(effect: LandingEffect, navController: NavHostController
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LandingScreen(
+    state: LandingState,
     onIntent: (DevHubRouteIntent) -> Unit,
     onLandingIntent: (LandingIntent) -> Unit
 ) {
+
+    var isProfileDialogVisible by remember { mutableStateOf(false) }
+
     Scaffold(
         modifier = Modifier.background(MetallicBlue),
         topBar = {
@@ -96,22 +109,25 @@ fun LandingScreen(
                     actionIconContentColor = Khaki
                 ),
                 actions = {
-                    Image(
+                    IconButton(
                         modifier = Modifier.padding(horizontal = 20.dp),
-                        imageVector = Icons.Default.Settings,
-                        contentDescription = ""
-                    )
+                        onClick = { onLandingIntent(LandingIntent.OnProfileDialogShow) }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = ""
+                        )
+                    }
                 }
             )
         },
         bottomBar = {
             BottomAppBar(
+                modifier = Modifier.height(50.dp),
                 contentColor = CetaceanBlue,
                 containerColor = MetallicBlue
             ) {
-                LandingButton(text = "Sign out") {
-                    onLandingIntent(LandingIntent.OnSignOut)
-                }
+                Text(text = "Made by Martin with 🧠", color = Khaki)
             }
         }
     ) { paddingValues ->
@@ -132,6 +148,21 @@ fun LandingScreen(
                     onIntent(DevHubRouteIntent.OnESP8266Clicked)
                 }
             }
+        }
+    }
+
+    LaunchedEffect(key1 = state.profileDialogState) {
+        isProfileDialogVisible = when(state.profileDialogState) {
+            ProfileDialogState.Hidden -> false
+            ProfileDialogState.Visible -> true
+        }
+    }
+
+    if (isProfileDialogVisible) {
+        ProfileDialog(
+            userProfileState = state.userProfileState
+        ) {
+            onLandingIntent(it)
         }
     }
 }
@@ -162,7 +193,11 @@ private fun LandingButton(
 private fun PreviewLandingScreen() {
     DevhubTheme {
         Surface {
-            LandingScreen(onIntent = { }) { }
+            LandingScreen(
+                state = LandingState(),
+                onIntent = { },
+                onLandingIntent = { }
+            )
         }
     }
 }
