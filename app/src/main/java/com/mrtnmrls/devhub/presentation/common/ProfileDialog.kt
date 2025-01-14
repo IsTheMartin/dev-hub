@@ -25,6 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -32,6 +34,7 @@ import androidx.compose.ui.window.DialogProperties
 import com.mrtnmrls.devhub.presentation.ui.intent.LandingIntent
 import com.mrtnmrls.devhub.presentation.ui.state.UserProfileState
 import com.mrtnmrls.devhub.presentation.ui.theme.DevhubTheme
+import com.mrtnmrls.devhub.presentation.ui.theme.Typography
 
 @Composable
 internal fun ProfileDialog(
@@ -94,7 +97,9 @@ private fun ProfileDialogTitle(onDismissDialog: () -> Unit) {
         Text(
             modifier = Modifier.align(Alignment.Center),
             text = "DevHub",
-            color = Color.White
+            color = Color.White,
+            style = Typography.titleLarge,
+            fontWeight = FontWeight.Bold
         )
     }
 }
@@ -123,6 +128,7 @@ private fun UserProfileInformation(
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(8.dp)
     ) {
         Image(
             modifier = Modifier
@@ -133,8 +139,19 @@ private fun UserProfileInformation(
         )
         Spacer(modifier = Modifier.width(16.dp))
         Column {
-            Text(text = userProfileState.displayName, color = Color.White)
-            Text(text = userProfileState.email, color = Color.White)
+            Text(
+                text = userProfileState.displayName,
+                color = Color.White,
+                style = Typography.titleMedium,
+                maxLines = 1
+            )
+            Text(
+                text = userProfileState.email,
+                color = Color.White,
+                style = Typography.bodyMedium,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1
+            )
         }
     }
 }
@@ -158,7 +175,10 @@ private fun PreviewProfileDialog() {
     DevhubTheme {
         Surface {
             ProfileDialog(
-                userProfileState = UserProfileState(),
+                userProfileState = UserProfileState(
+                    displayName = "Fulanito Escorza Jiménez Losa",
+                    email = "fulanito_jimenez_losa@chokomilk.com"
+                ),
                 onLandingIntent = {}
             )
         }
