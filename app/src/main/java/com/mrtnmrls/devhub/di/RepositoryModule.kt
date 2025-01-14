@@ -60,7 +60,10 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideAuthenticationRepository(firebaseAuth: FirebaseAuth, currentUserMapper: CurrentUserMapper): AuthenticationRepository {
+    fun provideAuthenticationRepository(
+        firebaseAuth: FirebaseAuth,
+        currentUserMapper: CurrentUserMapper
+    ): AuthenticationRepository {
         return AuthenticationRepositoryImpl(firebaseAuth, currentUserMapper)
     }
 }

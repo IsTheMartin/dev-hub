@@ -5,7 +5,6 @@ import com.google.firebase.auth.FirebaseUser
 import com.mrtnmrls.devhub.domain.model.CurrentUser
 
 class CurrentUserMapper {
-
     fun transform(firebaseUser: FirebaseUser): CurrentUser {
         return CurrentUser(
             displayName = firebaseUser.displayName.orEmpty(),
@@ -16,5 +15,4 @@ class CurrentUserMapper {
             uid = firebaseUser.uid
         )
     }
-
 }

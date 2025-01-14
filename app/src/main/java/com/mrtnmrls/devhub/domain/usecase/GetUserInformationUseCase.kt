@@ -8,9 +8,7 @@ import javax.inject.Inject
 class GetUserInformationUseCase @Inject constructor(
     private val repository: AuthenticationRepository
 ){
-
     suspend operator fun invoke(): UseCaseResult<CurrentUser> {
         return repository.getUserLoggedInformation()
     }
-
 }
