@@ -1,26 +1,16 @@
 package com.mrtnmrls.devhub.presentation.ui.screen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -33,13 +23,16 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.mrtnmrls.devhub.presentation.common.BottomAppBarView
 import com.mrtnmrls.devhub.presentation.common.ProfileDialog
+import com.mrtnmrls.devhub.presentation.common.TopAppBarView
 import com.mrtnmrls.devhub.presentation.ui.effect.LandingEffect
 import com.mrtnmrls.devhub.presentation.ui.intent.DevHubRouteIntent
 import com.mrtnmrls.devhub.presentation.ui.intent.LandingIntent
 import com.mrtnmrls.devhub.presentation.ui.route.DevHubRoute
 import com.mrtnmrls.devhub.presentation.ui.route.navigateToChristmasLightsScreen
 import com.mrtnmrls.devhub.presentation.ui.route.navigateToPullToRefreshScreen
+import com.mrtnmrls.devhub.presentation.ui.route.navigateToTodoListScreen
 import com.mrtnmrls.devhub.presentation.ui.state.LandingState
 import com.mrtnmrls.devhub.presentation.ui.state.ProfileDialogState
 import com.mrtnmrls.devhub.presentation.ui.theme.Camel
@@ -68,6 +61,7 @@ fun handleLandingIntents(intent: DevHubRouteIntent, navController: NavHostContro
     when (intent) {
         DevHubRouteIntent.OnESP8266Clicked -> navigateToChristmasLightsScreen(navController)
         DevHubRouteIntent.OnPullToRefreshClicked -> navigateToPullToRefreshScreen(navController)
+        DevHubRouteIntent.OnTodoListClicked -> navigateToTodoListScreen(navController)
     }
 }
 
@@ -86,7 +80,6 @@ fun HandleLandingEffects(effect: LandingEffect, navController: NavHostController
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LandingScreen(
     state: LandingState,
@@ -99,37 +92,9 @@ fun LandingScreen(
     Scaffold(
         modifier = Modifier.background(MetallicBlue),
         topBar = {
-            TopAppBar(
-                title = { Text(text = "DevHub") },
-                colors = TopAppBarColors(
-                    containerColor = MetallicBlue,
-                    titleContentColor = Khaki,
-                    scrolledContainerColor = Khaki,
-                    navigationIconContentColor = Khaki,
-                    actionIconContentColor = Khaki
-                ),
-                actions = {
-                    IconButton(
-                        modifier = Modifier.padding(horizontal = 20.dp),
-                        onClick = { onLandingIntent(LandingIntent.OnProfileDialogShow) }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Settings,
-                            contentDescription = ""
-                        )
-                    }
-                }
-            )
+            TopAppBarView { onLandingIntent(it) }
         },
-        bottomBar = {
-            BottomAppBar(
-                modifier = Modifier.height(50.dp),
-                contentColor = CetaceanBlue,
-                containerColor = MetallicBlue
-            ) {
-                Text(text = "Made by Martin with 🧠", color = Khaki)
-            }
-        }
+        bottomBar = { BottomAppBarView() }
     ) { paddingValues ->
         LazyVerticalGrid(
             modifier = Modifier
@@ -146,6 +111,11 @@ fun LandingScreen(
             item {
                 LandingButton(text = "ESP8266") {
                     onIntent(DevHubRouteIntent.OnESP8266Clicked)
+                }
+            }
+            item {
+                LandingButton(text = "Todo list") {
+                    onIntent(DevHubRouteIntent.OnTodoListClicked)
                 }
             }
         }

@@ -10,6 +10,7 @@ import com.mrtnmrls.devhub.presentation.ui.screen.ChristmasLightsContainer
 import com.mrtnmrls.devhub.presentation.ui.screen.LandingContainer
 import com.mrtnmrls.devhub.presentation.ui.screen.LoginContainer
 import com.mrtnmrls.devhub.presentation.ui.screen.PullToRefreshContainer
+import com.mrtnmrls.devhub.todolist.ui.TodoListContainer
 
 @Composable
 fun DevHubContainer() {
@@ -31,6 +32,9 @@ fun DevHubContainer() {
         }
         composable(DevHubRoute.ChristmasLights.route) {
             ChristmasLightsContainer(navController)
+        }
+        composable(DevHubRoute.TodoList.route) {
+            TodoListContainer(navController)
         }
     }
 }

@@ -12,6 +12,8 @@ import com.mrtnmrls.devhub.data.repository.AuthenticationRepositoryImpl
 import com.mrtnmrls.devhub.data.repository.Esp8266Repository
 import com.mrtnmrls.devhub.data.repository.Esp8266RepositoryImpl
 import com.mrtnmrls.devhub.domain.mapper.CurrentUserMapper
+import com.mrtnmrls.devhub.todolist.data.repository.InMemoryTaskRepositoryImpl
+import com.mrtnmrls.devhub.todolist.domain.repository.TaskRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -65,5 +67,11 @@ object RepositoryModule {
         currentUserMapper: CurrentUserMapper
     ): AuthenticationRepository {
         return AuthenticationRepositoryImpl(firebaseAuth, currentUserMapper)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTaskRepository(): TaskRepository {
+        return InMemoryTaskRepositoryImpl()
     }
 }

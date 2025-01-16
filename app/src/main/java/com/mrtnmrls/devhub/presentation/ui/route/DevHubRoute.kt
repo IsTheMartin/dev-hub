@@ -7,6 +7,7 @@ sealed class DevHubRoute(val route: String) {
     data object Landing : DevHubRoute("landing")
     data object PullToRefresh : DevHubRoute("pull_to_refresh")
     data object ChristmasLights : DevHubRoute("christmas_lights")
+    data object TodoList : DevHubRoute("todo_list")
 }
 
 fun navigateToLandingScreen(navController: NavHostController) =
@@ -20,3 +21,6 @@ fun navigateToPullToRefreshScreen(navController: NavHostController) =
 
 fun navigateToChristmasLightsScreen(navController: NavHostController) =
     navController.navigate(DevHubRoute.ChristmasLights.route)
+
+fun navigateToTodoListScreen(navController: NavHostController) =
+    navController.navigate(DevHubRoute.TodoList.route)
