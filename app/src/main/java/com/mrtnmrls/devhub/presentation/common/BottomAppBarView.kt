@@ -8,19 +8,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mrtnmrls.devhub.presentation.ui.theme.CetaceanBlue
+import com.mrtnmrls.devhub.presentation.ui.theme.AzureishWhite
+import com.mrtnmrls.devhub.presentation.ui.theme.DarkElectricBlue
 import com.mrtnmrls.devhub.presentation.ui.theme.DevhubTheme
-import com.mrtnmrls.devhub.presentation.ui.theme.Khaki
-import com.mrtnmrls.devhub.presentation.ui.theme.MetallicBlue
 
 @Composable
 internal fun BottomAppBarView(modifier: Modifier = Modifier) {
     BottomAppBar(
         modifier = modifier.height(50.dp),
-        contentColor = CetaceanBlue,
-        containerColor = MetallicBlue
+        contentColor = AzureishWhite,
+        containerColor = DarkElectricBlue
     ) {
-        Text(text = "Made by Martin with 🧠", color = Khaki)
+        Text(text = "Made by Martin with 🧠")
     }
 }
 

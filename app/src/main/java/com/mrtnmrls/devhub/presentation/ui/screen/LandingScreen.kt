@@ -18,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -35,12 +36,10 @@ import com.mrtnmrls.devhub.presentation.ui.route.navigateToPullToRefreshScreen
 import com.mrtnmrls.devhub.presentation.ui.route.navigateToTodoListScreen
 import com.mrtnmrls.devhub.presentation.ui.state.LandingState
 import com.mrtnmrls.devhub.presentation.ui.state.ProfileDialogState
-import com.mrtnmrls.devhub.presentation.ui.theme.Camel
-import com.mrtnmrls.devhub.presentation.ui.theme.CetaceanBlue
+import com.mrtnmrls.devhub.presentation.ui.theme.AzureishWhite
+import com.mrtnmrls.devhub.presentation.ui.theme.CadetBlue
+import com.mrtnmrls.devhub.presentation.ui.theme.DarkElectricBlue
 import com.mrtnmrls.devhub.presentation.ui.theme.DevhubTheme
-import com.mrtnmrls.devhub.presentation.ui.theme.Khaki
-import com.mrtnmrls.devhub.presentation.ui.theme.MetallicBlue
-import com.mrtnmrls.devhub.presentation.ui.theme.MorningBlue
 import com.mrtnmrls.devhub.presentation.viewmodel.LandingViewModel
 
 @Composable
@@ -90,7 +89,7 @@ fun LandingScreen(
     var isProfileDialogVisible by remember { mutableStateOf(false) }
 
     Scaffold(
-        modifier = Modifier.background(MetallicBlue),
+        modifier = Modifier.fillMaxSize(),
         topBar = {
             TopAppBarView { onLandingIntent(it) }
         },
@@ -99,7 +98,7 @@ fun LandingScreen(
         LazyVerticalGrid(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MorningBlue)
+                .background(AzureishWhite)
                 .padding(paddingValues),
             columns = GridCells.Fixed(2)
         ) {
@@ -149,10 +148,10 @@ private fun LandingButton(
         onClick = onClick,
         shape = RoundedCornerShape(4.dp),
         colors = ButtonColors(
-            containerColor = Camel,
-            contentColor = CetaceanBlue,
-            disabledContentColor = Khaki,
-            disabledContainerColor = MorningBlue
+            containerColor = CadetBlue,
+            contentColor = Color.Black,
+            disabledContentColor = Color.Black,
+            disabledContainerColor = Color.Gray
         )
     ) {
         Text(text = text)

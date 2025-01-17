@@ -15,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mrtnmrls.devhub.presentation.ui.intent.LandingIntent
+import com.mrtnmrls.devhub.presentation.ui.theme.AzureishWhite
+import com.mrtnmrls.devhub.presentation.ui.theme.DarkElectricBlue
 import com.mrtnmrls.devhub.presentation.ui.theme.DevhubTheme
-import com.mrtnmrls.devhub.presentation.ui.theme.Khaki
-import com.mrtnmrls.devhub.presentation.ui.theme.MetallicBlue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -29,11 +29,11 @@ internal fun TopAppBarView(
         modifier = modifier,
         title = { Text(text = "DevHub") },
         colors = TopAppBarColors(
-            containerColor = MetallicBlue,
-            titleContentColor = Khaki,
-            scrolledContainerColor = Khaki,
-            navigationIconContentColor = Khaki,
-            actionIconContentColor = Khaki
+            containerColor = DarkElectricBlue,
+            titleContentColor = AzureishWhite,
+            scrolledContainerColor = AzureishWhite,
+            navigationIconContentColor = AzureishWhite,
+            actionIconContentColor = AzureishWhite
         ),
         actions = {
             IconButton(

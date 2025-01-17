@@ -5,8 +5,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,16 +19,17 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
-import androidx.compose.material3.Checkbox
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -44,15 +47,20 @@ import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.mrtnmrls.devhub.common.ui.view.DevCheckbox
 import com.mrtnmrls.devhub.presentation.common.LoadingLottieView
+import com.mrtnmrls.devhub.presentation.ui.theme.AzureishWhite
+import com.mrtnmrls.devhub.presentation.ui.theme.CadetBlue
+import com.mrtnmrls.devhub.presentation.ui.theme.DarkElectricBlue
 import com.mrtnmrls.devhub.presentation.ui.theme.DevhubTheme
+import com.mrtnmrls.devhub.presentation.ui.theme.JapaneseIndigo
+import com.mrtnmrls.devhub.presentation.ui.theme.Typography
 import com.mrtnmrls.devhub.todolist.domain.model.Task
 import com.mrtnmrls.devhub.todolist.presentation.TaskDialogState
 import com.mrtnmrls.devhub.todolist.presentation.TaskEvent
 import com.mrtnmrls.devhub.todolist.presentation.TaskScreenState
 import com.mrtnmrls.devhub.todolist.presentation.TaskUiState
 import com.mrtnmrls.devhub.todolist.presentation.TaskViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -73,13 +81,28 @@ internal fun TodoListContainer(
                     ) {
                         Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = "Back")
                     }
-                }
+                },
+                colors = TopAppBarColors(
+                    containerColor = DarkElectricBlue,
+                    scrolledContainerColor = DarkElectricBlue,
+                    navigationIconContentColor = AzureishWhite,
+                    titleContentColor = AzureishWhite,
+                    actionIconContentColor = AzureishWhite
+                )
             )
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { viewModel.handleEvent(TaskEvent.OnShowDialog) }
-            ) { Icon(imageVector = Icons.Default.Add, contentDescription = "Add task") }
+                onClick = { viewModel.handleEvent(TaskEvent.OnShowDialog) },
+                containerColor = CadetBlue,
+                shape = RoundedCornerShape(8.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Add task",
+                    tint = JapaneseIndigo
+                )
+            }
         }
     ) { paddingValues ->
         TodoListScreen(
@@ -107,6 +130,7 @@ private fun TodoListScreen(
                 .fillMaxSize()
                 .background(Color.Red)
         )
+
         TaskScreenState.Loading -> LoadingLottieView()
         is TaskScreenState.SuccessfulTaskContent -> TasksListView(
             modifier = modifier,
@@ -120,7 +144,7 @@ private fun TodoListScreen(
     }
 
     LaunchedEffect(state.dialogState) {
-        isTaskDialogDisplayed = when(state.dialogState) {
+        isTaskDialogDisplayed = when (state.dialogState) {
             TaskDialogState.Displayed -> true
             TaskDialogState.Hidden -> false
         }
@@ -155,10 +179,10 @@ private fun TaskItem(task: Task, onTaskEvent: (TaskEvent) -> Unit) {
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Checkbox(
+            DevCheckbox(
                 modifier = Modifier.weight(0.2f),
-                checked = task.isCompleted,
-                onCheckedChange = { onTaskEvent(TaskEvent.ToggleTask(task.uid)) },
+                isChecked = task.isCompleted,
+                onCheckedChange = { onTaskEvent(TaskEvent.ToggleTask(task.uid)) }
             )
             Column(
                 modifier = Modifier
@@ -167,10 +191,12 @@ private fun TaskItem(task: Task, onTaskEvent: (TaskEvent) -> Unit) {
             ) {
                 Text(
                     text = task.title,
+                    style = Typography.titleMedium,
                     textDecoration = if (task.isCompleted) TextDecoration.LineThrough else TextDecoration.None
                 )
                 Text(
                     text = task.description,
+                    style = Typography.bodySmall,
                     textDecoration = if (task.isCompleted) TextDecoration.LineThrough else TextDecoration.None
                 )
             }
@@ -182,7 +208,8 @@ private fun TaskItem(task: Task, onTaskEvent: (TaskEvent) -> Unit) {
             ) {
                 Icon(
                     imageVector = Icons.Default.Delete,
-                    contentDescription = "Delete task"
+                    contentDescription = "Delete task",
+                    tint = JapaneseIndigo
                 )
             }
         }
@@ -201,19 +228,34 @@ private fun NewTaskDialog(
     ) {
         Box(
             modifier = Modifier
-                .clip(RoundedCornerShape(8.dp)),
+                .clip(RoundedCornerShape(8.dp))
+                .background(AzureishWhite)
+                .padding(vertical = 8.dp, horizontal = 16.dp),
             contentAlignment = Alignment.Center
         ) {
             Column {
-                TextField(
+                OutlinedTextField(
                     value = title,
-                    onValueChange = { title = it }
+                    onValueChange = { title = it },
+                    placeholder = {
+                        Text(text = "Title")
+                    },
+                    maxLines = 1,
+                    singleLine = true
                 )
-                TextField(
+                Spacer(modifier = Modifier.height(8.dp))
+                OutlinedTextField(
                     value = description,
-                    onValueChange = { description = it }
+                    onValueChange = { description = it },
+                    placeholder = {
+                        Text(text = "Description")
+                    },
+                    maxLines = 3
                 )
+                Spacer(modifier = Modifier.height(8.dp))
                 Button(
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally),
                     onClick = {
                         onTaskEvent(
                             TaskEvent.AddTask(
@@ -223,7 +265,14 @@ private fun NewTaskDialog(
                                 )
                             )
                         )
-                    }
+                    },
+                    shape = RoundedCornerShape(8.dp),
+                    colors = ButtonColors(
+                        containerColor = JapaneseIndigo,
+                        contentColor = AzureishWhite,
+                        disabledContainerColor = DarkElectricBlue,
+                        disabledContentColor = CadetBlue
+                    )
                 ) {
                     Text(text = "Add task")
                 }
@@ -254,6 +303,16 @@ private fun PreviewTaskItem() {
                     )
                 )
             ) { }
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun PreviewNewTaskDialog() {
+    DevhubTheme {
+        Surface {
+            NewTaskDialog { }
         }
     }
 }
