@@ -1,4 +1,4 @@
-package com.mrtnmrls.devhub.presentation.common
+package com.mrtnmrls.devhub.common.ui.view
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

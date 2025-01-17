@@ -1,4 +1,4 @@
-package com.mrtnmrls.devhub.data.model
+package com.mrtnmrls.devhub.esp8266.domain.model
 
 data class Esp8266Values(
     val christmasLights: Boolean = false,

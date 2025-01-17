@@ -1,4 +1,4 @@
-package com.mrtnmrls.devhub.presentation.ui.state
+package com.mrtnmrls.devhub.pulltorefresh.presentation
 
 import com.mrtnmrls.devhub.domain.model.NintendoSwitch
 

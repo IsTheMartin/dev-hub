@@ -1,13 +1,11 @@
-package com.mrtnmrls.devhub.presentation.viewmodel
+package com.mrtnmrls.devhub.esp8266.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mrtnmrls.devhub.data.model.Esp8266Values
+import com.mrtnmrls.devhub.esp8266.domain.model.Esp8266Values
 import com.mrtnmrls.devhub.domain.UseCaseResult
-import com.mrtnmrls.devhub.domain.usecase.GetEsp8266Data
-import com.mrtnmrls.devhub.domain.usecase.ToggleChristmasLightsUseCase
-import com.mrtnmrls.devhub.presentation.ui.state.Esp8266State
-import com.mrtnmrls.devhub.presentation.ui.state.Esp8266ScreenState
+import com.mrtnmrls.devhub.esp8266.domain.usecase.GetEsp8266Data
+import com.mrtnmrls.devhub.esp8266.domain.usecase.ToggleChristmasLightsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

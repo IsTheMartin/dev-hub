@@ -1,4 +1,4 @@
-package com.mrtnmrls.devhub.domain.model
+package com.mrtnmrls.devhub.esp8266.domain.model
 
 import com.google.firebase.database.PropertyName
 

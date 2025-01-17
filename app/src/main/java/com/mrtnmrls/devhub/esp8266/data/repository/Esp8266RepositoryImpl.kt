@@ -1,10 +1,10 @@
-package com.mrtnmrls.devhub.data.repository
+package com.mrtnmrls.devhub.esp8266.data.repository
 
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.mrtnmrls.devhub.domain.model.Esp8266
+import com.mrtnmrls.devhub.esp8266.domain.model.Esp8266
 import com.mrtnmrls.devhub.domain.UseCaseResult
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow

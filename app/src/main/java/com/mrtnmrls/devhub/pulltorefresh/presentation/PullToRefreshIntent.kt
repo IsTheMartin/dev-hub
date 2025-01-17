@@ -1,4 +1,4 @@
-package com.mrtnmrls.devhub.presentation.ui.intent
+package com.mrtnmrls.devhub.pulltorefresh.presentation
 
 sealed class PullToRefreshIntent {
     data object OnPullToRefresh : PullToRefreshIntent()

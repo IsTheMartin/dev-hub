@@ -1,6 +1,6 @@
-package com.mrtnmrls.devhub.presentation.ui.state
+package com.mrtnmrls.devhub.esp8266.presentation
 
-import com.mrtnmrls.devhub.data.model.Esp8266Values
+import com.mrtnmrls.devhub.esp8266.domain.model.Esp8266Values
 
 data class Esp8266State(
     val uiState: Esp8266ScreenState = Esp8266ScreenState.Loading

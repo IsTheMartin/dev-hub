@@ -15,12 +15,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -28,8 +26,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -48,7 +44,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.mrtnmrls.devhub.common.ui.view.DevCheckbox
-import com.mrtnmrls.devhub.presentation.common.LoadingLottieView
+import com.mrtnmrls.devhub.common.ui.view.DevTopAppBar
+import com.mrtnmrls.devhub.common.ui.view.LoadingLottieView
 import com.mrtnmrls.devhub.presentation.ui.theme.AzureishWhite
 import com.mrtnmrls.devhub.presentation.ui.theme.CadetBlue
 import com.mrtnmrls.devhub.presentation.ui.theme.DarkElectricBlue
@@ -62,7 +59,6 @@ import com.mrtnmrls.devhub.todolist.presentation.TaskScreenState
 import com.mrtnmrls.devhub.todolist.presentation.TaskUiState
 import com.mrtnmrls.devhub.todolist.presentation.TaskViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun TodoListContainer(
     navController: NavHostController
@@ -73,23 +69,9 @@ internal fun TodoListContainer(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            TopAppBar(
-                title = { Text(text = "To-do list") },
-                navigationIcon = {
-                    IconButton(
-                        onClick = { navController.navigateUp() }
-                    ) {
-                        Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = "Back")
-                    }
-                },
-                colors = TopAppBarColors(
-                    containerColor = DarkElectricBlue,
-                    scrolledContainerColor = DarkElectricBlue,
-                    navigationIconContentColor = AzureishWhite,
-                    titleContentColor = AzureishWhite,
-                    actionIconContentColor = AzureishWhite
-                )
-            )
+            DevTopAppBar(
+                title = "Todo list"
+            ) { navController.navigateUp() }
         },
         floatingActionButton = {
             FloatingActionButton(

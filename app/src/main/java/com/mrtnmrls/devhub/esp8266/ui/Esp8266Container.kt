@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.mrtnmrls.devhub.presentation.ui.screen
+package com.mrtnmrls.devhub.esp8266.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -9,107 +9,84 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import com.mrtnmrls.devhub.presentation.common.LoadingLottieView
-import com.mrtnmrls.devhub.presentation.ui.state.Esp8266ScreenState
+import com.mrtnmrls.devhub.common.ui.view.DevTopAppBar
+import com.mrtnmrls.devhub.common.ui.view.LoadingLottieView
+import com.mrtnmrls.devhub.esp8266.presentation.Esp8266ScreenState
 import com.mrtnmrls.devhub.presentation.ui.theme.CetaceanBlue
-import com.mrtnmrls.devhub.presentation.viewmodel.Esp8266ViewModel
+import com.mrtnmrls.devhub.esp8266.presentation.Esp8266ViewModel
+import com.mrtnmrls.devhub.presentation.ui.theme.AzureishWhite
+import com.mrtnmrls.devhub.presentation.ui.theme.CadetBlue
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
 @Composable
-internal fun ChristmasLightsContainer(
+internal fun Esp8266Container(
     navController: NavHostController
 ) {
     val esp8266ViewModel = hiltViewModel<Esp8266ViewModel>()
     val state by esp8266ViewModel.state.collectAsState()
-    ChristmasLightsScreen(
-        navController = navController,
-        onChange = { esp8266ViewModel.toggleChristmasLightsState() },
-        uiState = state.uiState
-    )
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            DevTopAppBar(
+                title = "ESP8266"
+            ) { navController.navigateUp() }
+        }
+    ) { paddingValues ->
+        Esp8266Screen(
+            modifier = Modifier.padding(paddingValues),
+            onChange = { esp8266ViewModel.toggleChristmasLightsState() },
+            uiState = state.uiState
+        )
+    }
 }
 
 @Composable
-internal fun ChristmasLightsScreen(
-    navController: NavController,
+internal fun Esp8266Screen(
+    modifier: Modifier = Modifier,
     onChange: () -> Unit,
     uiState: Esp8266ScreenState
 ) {
-    Scaffold(
-        modifier = Modifier
-            .fillMaxSize(),
-        topBar = {
-            TopAppBar(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = CetaceanBlue
-                ),
-                title = { Text(text = "ESP8266") },
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                            contentDescription = "Back"
-                        )
-                    }
-                }
-            )
-        }
-    ) { paddingValues ->
         when (uiState) {
             Esp8266ScreenState.Error -> {
                 Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues)
-                        .background(Color.Red)
+                    modifier = modifier
+                        .background(CadetBlue)
                 )
             }
 
             Esp8266ScreenState.Loading -> {
                 LoadingLottieView(
-                    modifier = Modifier
-                        .padding(paddingValues)
-                        .background(CetaceanBlue)
+                    modifier = modifier
+                        .background(AzureishWhite)
                 )
             }
 
             is Esp8266ScreenState.SuccessfulContent -> {
                 ContentView(
-                    modifier = Modifier
-                        .padding(paddingValues)
-                        .background(CetaceanBlue),
+                    modifier = modifier
+                        .background(AzureishWhite),
                     state = uiState,
                     onToggleChristmasLights = onChange
                 )
             }
         }
-    }
 }
 
 @Composable
@@ -161,7 +138,7 @@ private fun ContentView(
             }
             Switch(
                 checked = state.values.christmasLights,
-                onCheckedChange = { newState -> onToggleChristmasLights() },
+                onCheckedChange = { onToggleChristmasLights() },
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = MaterialTheme.colorScheme.primary,
                     uncheckedThumbColor = MaterialTheme.colorScheme.secondary

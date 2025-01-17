@@ -1,12 +1,9 @@
-package com.mrtnmrls.devhub.presentation.viewmodel
+package com.mrtnmrls.devhub.pulltorefresh.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mrtnmrls.devhub.domain.UseCaseResult
 import com.mrtnmrls.devhub.domain.usecase.GetFakeNintendoGamesDataUseCase
-import com.mrtnmrls.devhub.presentation.ui.intent.PullToRefreshIntent
-import com.mrtnmrls.devhub.presentation.ui.state.PullToRefreshScreenState
-import com.mrtnmrls.devhub.presentation.ui.state.PullToRefreshResiliencyState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow

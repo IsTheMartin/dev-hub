@@ -1,8 +1,9 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.mrtnmrls.devhub.presentation.ui.screen
+package com.mrtnmrls.devhub.pulltorefresh.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,7 +19,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.PullToRefreshState
@@ -32,56 +32,67 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 import com.mrtnmrls.devhub.R
+import com.mrtnmrls.devhub.common.ui.view.DevTopAppBar
 import com.mrtnmrls.devhub.domain.model.NintendoSwitch
-import com.mrtnmrls.devhub.presentation.common.LoadingLottieView
-import com.mrtnmrls.devhub.presentation.ui.intent.PullToRefreshIntent
-import com.mrtnmrls.devhub.presentation.ui.state.PullToRefreshScreenState
-import com.mrtnmrls.devhub.presentation.ui.state.PullToRefreshResiliencyState
-import com.mrtnmrls.devhub.presentation.viewmodel.PullToRefreshViewModel
+import com.mrtnmrls.devhub.common.ui.view.LoadingLottieView
+import com.mrtnmrls.devhub.presentation.ui.theme.AzureishWhite
+import com.mrtnmrls.devhub.pulltorefresh.presentation.PullToRefreshIntent
+import com.mrtnmrls.devhub.pulltorefresh.presentation.PullToRefreshScreenState
+import com.mrtnmrls.devhub.pulltorefresh.presentation.PullToRefreshResiliencyState
+import com.mrtnmrls.devhub.pulltorefresh.presentation.PullToRefreshViewModel
 
 @Composable
-internal fun PullToRefreshContainer() {
+internal fun PullToRefreshContainer(navController: NavHostController) {
     val pullToRefreshViewModel = hiltViewModel<PullToRefreshViewModel>()
     val state by pullToRefreshViewModel.state.collectAsStateWithLifecycle()
-    PullToRefreshScreen(state = state, onIntent = pullToRefreshViewModel::dispatchIntent)
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun PullToRefreshScreen(
-    state: PullToRefreshResiliencyState,
-    onIntent: (PullToRefreshIntent) -> Unit
-) {
-    val pullRefreshState = rememberPullToRefreshState(20.dp)
 
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
         topBar = {
-            TopAppBar(title = { })
+            DevTopAppBar(
+                title = "Pull to refresh"
+            ) { navController.navigateUp() }
         }
     ) { paddingValues ->
-        when (state.screen) {
-            PullToRefreshScreenState.Error -> ErrorResiliencyView(
-                Modifier.padding(paddingValues),
-                pullRefreshState
-            ) {
-                onIntent(PullToRefreshIntent.OnPullToRefresh)
-            }
+        PullToRefreshScreen(
+            modifier = Modifier.padding(paddingValues),
+            state = state,
+            onIntent = pullToRefreshViewModel::dispatchIntent
+        )
+    }
 
-            PullToRefreshScreenState.Loading -> {
-                pullRefreshState.endRefresh()
-                LoadingLottieView(Modifier.padding(paddingValues))
-            }
+}
 
-            is PullToRefreshScreenState.SuccessContent -> ContentView(
-                Modifier.padding(paddingValues),
-                state.screen.nintendoGames,
-                pullRefreshState,
-            ) {
-                onIntent(PullToRefreshIntent.OnPullToRefresh)
-            }
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun PullToRefreshScreen(
+    modifier: Modifier = Modifier,
+    state: PullToRefreshResiliencyState,
+    onIntent: (PullToRefreshIntent) -> Unit
+) {
+    val pullRefreshState = rememberPullToRefreshState(20.dp)
+    when (state.screen) {
+        PullToRefreshScreenState.Error -> ErrorResiliencyView(
+            modifier,
+            pullRefreshState
+        ) {
+            onIntent(PullToRefreshIntent.OnPullToRefresh)
+        }
+
+        PullToRefreshScreenState.Loading -> {
+            pullRefreshState.endRefresh()
+            LoadingLottieView(modifier.background(AzureishWhite))
+        }
+
+        is PullToRefreshScreenState.SuccessContent -> ContentView(
+            modifier,
+            state.screen.nintendoGames,
+            pullRefreshState,
+        ) {
+            onIntent(PullToRefreshIntent.OnPullToRefresh)
         }
     }
 }
@@ -101,7 +112,8 @@ private fun ErrorResiliencyView(
     Box(
         modifier = modifier
             .nestedScroll(pullRefreshState.nestedScrollConnection)
-            .fillMaxSize(),
+            .fillMaxSize()
+            .background(AzureishWhite),
         contentAlignment = Alignment.Center
     ) {
         PullToRefreshContainer(
@@ -140,7 +152,8 @@ private fun ContentView(
     Box(
         modifier = modifier
             .nestedScroll(pullRefreshState.nestedScrollConnection)
-            .fillMaxSize(),
+            .fillMaxSize()
+            .background(AzureishWhite),
         contentAlignment = Alignment.Center
     ) {
         PullToRefreshContainer(
