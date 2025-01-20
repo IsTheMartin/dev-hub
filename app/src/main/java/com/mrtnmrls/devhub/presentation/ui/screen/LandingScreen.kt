@@ -32,13 +32,13 @@ import com.mrtnmrls.devhub.presentation.ui.intent.DevHubRouteIntent
 import com.mrtnmrls.devhub.presentation.ui.intent.LandingIntent
 import com.mrtnmrls.devhub.presentation.ui.route.DevHubRoute
 import com.mrtnmrls.devhub.presentation.ui.route.navigateToChristmasLightsScreen
+import com.mrtnmrls.devhub.presentation.ui.route.navigateToGuessNumberScreen
 import com.mrtnmrls.devhub.presentation.ui.route.navigateToPullToRefreshScreen
 import com.mrtnmrls.devhub.presentation.ui.route.navigateToTodoListScreen
 import com.mrtnmrls.devhub.presentation.ui.state.LandingState
 import com.mrtnmrls.devhub.presentation.ui.state.ProfileDialogState
 import com.mrtnmrls.devhub.presentation.ui.theme.AzureishWhite
 import com.mrtnmrls.devhub.presentation.ui.theme.CadetBlue
-import com.mrtnmrls.devhub.presentation.ui.theme.DarkElectricBlue
 import com.mrtnmrls.devhub.presentation.ui.theme.DevhubTheme
 import com.mrtnmrls.devhub.presentation.viewmodel.LandingViewModel
 
@@ -61,6 +61,7 @@ fun handleLandingIntents(intent: DevHubRouteIntent, navController: NavHostContro
         DevHubRouteIntent.OnESP8266Clicked -> navigateToChristmasLightsScreen(navController)
         DevHubRouteIntent.OnPullToRefreshClicked -> navigateToPullToRefreshScreen(navController)
         DevHubRouteIntent.OnTodoListClicked -> navigateToTodoListScreen(navController)
+        DevHubRouteIntent.OnGuessNumberClicked -> navigateToGuessNumberScreen(navController)
     }
 }
 
@@ -115,6 +116,11 @@ fun LandingScreen(
             item {
                 LandingButton(text = "Todo list") {
                     onIntent(DevHubRouteIntent.OnTodoListClicked)
+                }
+            }
+            item {
+                LandingButton(text = "Guess the number") {
+                    onIntent(DevHubRouteIntent.OnGuessNumberClicked)
                 }
             }
         }
