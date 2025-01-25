@@ -38,6 +38,8 @@ import com.mrtnmrls.devhub.common.ui.view.DevTopAppBar
 import com.mrtnmrls.devhub.domain.model.NintendoSwitch
 import com.mrtnmrls.devhub.common.ui.view.LoadingLottieView
 import com.mrtnmrls.devhub.presentation.ui.theme.AzureishWhite
+import com.mrtnmrls.devhub.presentation.ui.theme.JapaneseIndigo
+import com.mrtnmrls.devhub.presentation.ui.theme.Typography
 import com.mrtnmrls.devhub.pulltorefresh.presentation.PullToRefreshIntent
 import com.mrtnmrls.devhub.pulltorefresh.presentation.PullToRefreshScreenState
 import com.mrtnmrls.devhub.pulltorefresh.presentation.PullToRefreshResiliencyState
@@ -131,7 +133,11 @@ private fun ErrorResiliencyView(
         ) {
             Image(painter = painterResource(R.drawable.server_down), contentDescription = "")
             Spacer(modifier = Modifier.height(32.dp))
-            Text("No internet connection")
+            Text(
+                text = "No internet connection",
+                color = JapaneseIndigo,
+                style = Typography.headlineSmall
+            )
         }
     }
 }
@@ -172,18 +178,27 @@ private fun ContentView(
             ) {
                 Image(painter = painterResource(R.drawable.empty_data), contentDescription = "")
                 Spacer(modifier = Modifier.height(32.dp))
-                Text("No internet connection")
+                Text(
+                    text = "No internet connection",
+                    color = JapaneseIndigo,
+                    style = Typography.headlineSmall
+                )
             }
         } else {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(horizontal = 32.dp)
-                    .nestedScroll(pullRefreshState.nestedScrollConnection)
+                    .nestedScroll(pullRefreshState.nestedScrollConnection),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 items(list) {
                     Row {
-                        Text(it.name)
+                        Text(
+                            text = it.name,
+                            color = JapaneseIndigo,
+                            style = Typography.bodyLarge
+                        )
                     }
                 }
             }

@@ -24,6 +24,7 @@ import com.mrtnmrls.devhub.presentation.ui.theme.Typography
 @Composable
 fun GameOverView(
     modifier: Modifier = Modifier,
+    targetNumber: Int,
     attempts: Int,
     onEvent: (GuessNumberEvent) -> Unit
 ) {
@@ -34,6 +35,13 @@ fun GameOverView(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Text(
+            text = targetNumber.toString(),
+            style = Typography.displayLarge,
+            color = JapaneseIndigo,
+            fontWeight = FontWeight.Bold
+        )
+        VerticalSpacer(8.dp)
         Text(
             text = stringResource(R.string.guess_number_game_over),
             color = JapaneseIndigo,
@@ -58,6 +66,7 @@ private fun PreviewGameOverView() {
     DevhubTheme {
         Surface {
             GameOverView(
+                targetNumber = 75,
                 attempts = 10
             ) { }
         }

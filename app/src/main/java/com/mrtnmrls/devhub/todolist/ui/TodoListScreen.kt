@@ -143,7 +143,9 @@ private fun TasksListView(
     onTaskEvent: (TaskEvent) -> Unit
 ) {
     LazyColumn(
-        modifier = modifier.fillMaxSize()
+        modifier = modifier
+            .fillMaxSize()
+            .background(AzureishWhite)
     ) {
         items(tasks) { task ->
             TaskItem(task) { onTaskEvent(it) }
@@ -177,12 +179,14 @@ private fun TaskItem(task: Task, onTaskEvent: (TaskEvent) -> Unit) {
                 Text(
                     text = task.title,
                     style = Typography.titleMedium,
-                    textDecoration = if (task.isCompleted) TextDecoration.LineThrough else TextDecoration.None
+                    textDecoration = if (task.isCompleted) TextDecoration.LineThrough else TextDecoration.None,
+                    color = JapaneseIndigo
                 )
                 Text(
                     text = task.description,
                     style = Typography.bodySmall,
-                    textDecoration = if (task.isCompleted) TextDecoration.LineThrough else TextDecoration.None
+                    textDecoration = if (task.isCompleted) TextDecoration.LineThrough else TextDecoration.None,
+                    color = JapaneseIndigo
                 )
             }
             IconButton(
@@ -196,71 +200,6 @@ private fun TaskItem(task: Task, onTaskEvent: (TaskEvent) -> Unit) {
                     contentDescription = "Delete task",
                     tint = JapaneseIndigo
                 )
-            }
-        }
-    }
-}
-
-@Composable
-private fun NewTaskDialog(
-    onTaskEvent: (TaskEvent) -> Unit
-) {
-    var title by remember { mutableStateOf("") }
-    var description by remember { mutableStateOf("") }
-
-    Dialog(
-        onDismissRequest = { onTaskEvent(TaskEvent.OnDismissDialog) }
-    ) {
-        Box(
-            modifier = Modifier
-                .clip(RoundedCornerShape(8.dp))
-                .background(AzureishWhite)
-                .padding(vertical = 8.dp, horizontal = 16.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Column {
-                OutlinedTextField(
-                    value = title,
-                    onValueChange = { title = it },
-                    placeholder = {
-                        Text(text = "Title")
-                    },
-                    maxLines = 1,
-                    singleLine = true
-                )
-                VerticalSpacer(8.dp)
-                OutlinedTextField(
-                    value = description,
-                    onValueChange = { description = it },
-                    placeholder = {
-                        Text(text = "Description")
-                    },
-                    maxLines = 3
-                )
-                VerticalSpacer(8.dp)
-                Button(
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally),
-                    onClick = {
-                        onTaskEvent(
-                            TaskEvent.AddTask(
-                                Task(
-                                    title = title,
-                                    description = description
-                                )
-                            )
-                        )
-                    },
-                    shape = RoundedCornerShape(8.dp),
-                    colors = ButtonColors(
-                        containerColor = JapaneseIndigo,
-                        contentColor = AzureishWhite,
-                        disabledContainerColor = DarkElectricBlue,
-                        disabledContentColor = CadetBlue
-                    )
-                ) {
-                    Text(text = "Add task")
-                }
             }
         }
     }
@@ -292,12 +231,4 @@ private fun PreviewTaskItem() {
     }
 }
 
-@Preview
-@Composable
-private fun PreviewNewTaskDialog() {
-    DevhubTheme {
-        Surface {
-            NewTaskDialog { }
-        }
-    }
-}
+

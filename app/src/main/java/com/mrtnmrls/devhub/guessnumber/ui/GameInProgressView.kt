@@ -86,8 +86,7 @@ internal fun GameInProgressView(
                 cursorColor = JapaneseIndigo,
                 focusedBorderColor = JapaneseIndigo
             ),
-
-            )
+        )
         VerticalSpacer(12.dp)
         Text(
             text = feedback,
@@ -97,7 +96,10 @@ internal fun GameInProgressView(
         PrimaryButton(
             modifier = modifier
                 .fillMaxWidth(),
-            onClick = { onEvent(GuessNumberEvent.OnGuess(number)) },
+            onClick = {
+                onEvent(GuessNumberEvent.OnGuess(number))
+                number = ""
+            },
             buttonText = stringResource(R.string.guess_number_guess)
         )
         SecondaryButton(
@@ -105,7 +107,6 @@ internal fun GameInProgressView(
                 .fillMaxWidth(),
             onClick = {
                 onEvent(GuessNumberEvent.OnSurrender)
-                number = ""
             },
             buttonText = stringResource(R.string.guess_number_surrender)
         )

@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.mrtnmrls.devhub.presentation.ui.theme.AzureishWhite
 import com.mrtnmrls.devhub.presentation.ui.theme.DarkElectricBlue
@@ -21,7 +22,12 @@ fun DevTopAppBar(
     title: String,
     onBackIconClicked: () -> Unit
 ) = TopAppBar(
-    title = { Text(text = title) },
+    title = {
+        Text(
+            text = title,
+            fontWeight = FontWeight.Bold
+        )
+    },
     navigationIcon = {
         IconButton(
             onClick = { onBackIconClicked() }

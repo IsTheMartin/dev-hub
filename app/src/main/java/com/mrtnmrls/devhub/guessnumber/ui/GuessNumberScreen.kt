@@ -61,12 +61,14 @@ fun GuessNumberScreen(
 
         is GuessNumberUiState.GameOver -> GameOverView(
             modifier = modifier,
+            targetNumber = uiState.gameState.targetNumber,
             attempts = uiState.gameState.attempts,
             onEvent = onEvent
         )
 
         is GuessNumberUiState.GameWin -> GameWinView(
             modifier = modifier,
+            targetNumber = uiState.gameState.targetNumber,
             attempts = uiState.gameState.attempts,
             onEvent = onEvent
         )

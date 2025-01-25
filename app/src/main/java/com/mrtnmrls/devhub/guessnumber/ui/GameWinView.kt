@@ -25,6 +25,7 @@ import com.mrtnmrls.devhub.presentation.ui.theme.Typography
 @Composable
 fun GameWinView(
     modifier: Modifier = Modifier,
+    targetNumber: Int,
     attempts: Int,
     onEvent: (GuessNumberEvent) -> Unit
 ) {
@@ -36,13 +37,20 @@ fun GameWinView(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
+            text = targetNumber.toString(),
+            style = Typography.displayLarge,
+            color = JapaneseIndigo,
+            fontWeight = FontWeight.Bold
+        )
+        VerticalSpacer(8.dp)
+        Text(
             text = stringResource(R.string.guess_number_game_winner),
             style = Typography.titleLarge,
             color = JapaneseIndigo,
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = pluralStringResource(R.plurals.guess_number_game_winner_description, attempts),
+            text = pluralStringResource(R.plurals.guess_number_game_winner_description, attempts, attempts),
             style = Typography.bodyMedium,
             color = DarkElectricBlue
         )
@@ -59,6 +67,7 @@ private fun PreviewGameWinView() {
     DevhubTheme {
         Surface {
             GameWinView(
+                targetNumber = 41,
                 attempts = 7
             ) { }
         }
