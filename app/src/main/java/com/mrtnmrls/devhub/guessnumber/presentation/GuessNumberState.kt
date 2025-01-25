@@ -1,5 +1,7 @@
 package com.mrtnmrls.devhub.guessnumber.presentation
 
+import com.mrtnmrls.devhub.guessnumber.domain.model.GuessNumberGameState
+
 data class GuessNumberState(
     val uiScreenState: GuessNumberUiState = GuessNumberUiState.Instructions
 )
@@ -7,16 +9,15 @@ data class GuessNumberState(
 sealed class GuessNumberUiState {
     data object Instructions : GuessNumberUiState()
     data class GameInProgress(
-        val attempt: Int = 0,
-        val numberCorrect: Int = 0,
-        val hint: String = ""
+        val gameState: GuessNumberGameState = GuessNumberGameState()
     ) : GuessNumberUiState()
-    data class GameOver(val totalAttempts: Int = 0) : GuessNumberUiState()
-    data class GameWin(val totalAttempts: Int = 0) : GuessNumberUiState()
+    data class GameOver(
+        val gameState: GuessNumberGameState
+    ) : GuessNumberUiState()
+    data class GameWin(
+        val gameState: GuessNumberGameState
+    ) : GuessNumberUiState()
 
     val asSafeGameInProgress: GameInProgress
         get() = this as? GameInProgress ?: GameInProgress()
 }
-
-// instructions -> game in progress -> game over -> game in progress -> game win
-// instructions -> game in progress -> game win -> game in progress -> game over

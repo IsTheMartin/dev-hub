@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">dev-hub</string>
+
+    <!-- Guess number -->
+    <string name="guess_number_new_game">New game!</string>
+    <string name="guess_number_game_over">Game over</string>
+    <string name="guess_number_game_winner">Winner winner chicken dinner!</string>
+    <plurals name="guess_number_game_winner_description">
+        <item quantity="one">You have won in %d attempt</item>
+        <item quantity="other">You have won in %d attempts</item>
+    </plurals>
+    <string name="guess_number_instructions">Try to guess a number between 1 and 100; you have infinite attempts.</string>
+    <string name="guess_number_current_attempts">Attempts: %d</string>
+    <string name="guess_number_guess">Guess</string>
+    <string name="guess_number_surrender">Surrender</string>
+    <string name="guess_number_too_low">Too low!, try again</string>
+    <string name="guess_number_too_high">Too high!, try again</string>
 </resources>

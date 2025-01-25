@@ -46,6 +46,7 @@ import androidx.navigation.NavHostController
 import com.mrtnmrls.devhub.common.ui.view.DevCheckbox
 import com.mrtnmrls.devhub.common.ui.view.DevTopAppBar
 import com.mrtnmrls.devhub.common.ui.view.LoadingLottieView
+import com.mrtnmrls.devhub.common.ui.view.VerticalSpacer
 import com.mrtnmrls.devhub.presentation.ui.theme.AzureishWhite
 import com.mrtnmrls.devhub.presentation.ui.theme.CadetBlue
 import com.mrtnmrls.devhub.presentation.ui.theme.DarkElectricBlue
@@ -67,7 +68,9 @@ internal fun TodoListContainer(
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(AzureishWhite),
         topBar = {
             DevTopAppBar(
                 title = "Todo list"
@@ -225,7 +228,7 @@ private fun NewTaskDialog(
                     maxLines = 1,
                     singleLine = true
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                VerticalSpacer(8.dp)
                 OutlinedTextField(
                     value = description,
                     onValueChange = { description = it },
@@ -234,7 +237,7 @@ private fun NewTaskDialog(
                     },
                     maxLines = 3
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                VerticalSpacer(8.dp)
                 Button(
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally),

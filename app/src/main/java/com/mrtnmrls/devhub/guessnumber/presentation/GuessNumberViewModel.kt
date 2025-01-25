@@ -1,14 +1,21 @@
 package com.mrtnmrls.devhub.guessnumber.presentation
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.mrtnmrls.devhub.guessnumber.domain.usecase.GuessNumberUseCase
+import com.mrtnmrls.devhub.guessnumber.domain.usecase.ResetGuessNumberStateUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class GuessNumberViewModel @Inject constructor() : ViewModel() {
+class GuessNumberViewModel @Inject constructor(
+    private val guessNumberUseCase: GuessNumberUseCase,
+    private val resetGuessNumberStateUseCase: ResetGuessNumberStateUseCase
+) : ViewModel() {
 
     private val _state = MutableStateFlow(GuessNumberState())
     val state = _state.asStateFlow()
@@ -16,7 +23,7 @@ class GuessNumberViewModel @Inject constructor() : ViewModel() {
     fun handleEvents(event: GuessNumberEvent) {
         when (event) {
             GuessNumberEvent.OnPreMatch -> displayInstructions()
-            is GuessNumberEvent.OnAttempt -> attempt(event.number)
+            is GuessNumberEvent.OnGuess -> guess(event.number)
             GuessNumberEvent.OnNewGame -> startNewGame()
             GuessNumberEvent.OnSurrender -> surrender()
         }
@@ -28,38 +35,27 @@ class GuessNumberViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    private fun attempt(number: String) {
-        val gameInProgress = _state.value.uiScreenState.asSafeGameInProgress
-        val newAttemptValue = gameInProgress.attempt + 1
-        if (number.toInt() == gameInProgress.numberCorrect) {
-            _state.update {
-                it.copy(uiScreenState = GuessNumberUiState.GameWin(newAttemptValue))
-            }
-        } else {
-            val hint = if (gameInProgress.numberCorrect > number.toInt()) {
-                "is greater"
+    private fun guess(number: String) {
+        if (number.isNotEmpty()) {
+            val gameInProgress = _state.value.uiScreenState.asSafeGameInProgress
+            val updatedGameState = guessNumberUseCase(gameInProgress.gameState, number.toInt())
+            if (updatedGameState.isWinner) {
+                _state.update {
+                    it.copy(uiScreenState = GuessNumberUiState.GameWin(updatedGameState))
+                }
             } else {
-                "is lower"
-            }
-            _state.update {
-                it.copy(
-                    uiScreenState = _state.value.uiScreenState.asSafeGameInProgress.copy(
-                        attempt = newAttemptValue,
-                        hint = hint
-                    )
-                )
+                _state.update {
+                    it.copy(uiScreenState = GuessNumberUiState.GameInProgress(updatedGameState))
+                }
             }
         }
     }
 
-    private fun startNewGame() {
-        val randomNumber = (1..101).random()
+    private fun startNewGame() = viewModelScope.launch {
+        val newGameState = resetGuessNumberStateUseCase()
         _state.update {
             it.copy(
-                uiScreenState = GuessNumberUiState.GameInProgress(
-                    attempt = 0,
-                    numberCorrect = randomNumber
-                )
+                uiScreenState = GuessNumberUiState.GameInProgress(newGameState)
             )
         }
     }
@@ -67,8 +63,7 @@ class GuessNumberViewModel @Inject constructor() : ViewModel() {
     private fun surrender() {
         val gameInProgress = _state.value.uiScreenState.asSafeGameInProgress
         _state.update {
-            it.copy(uiScreenState = GuessNumberUiState.GameOver(gameInProgress.attempt))
+            it.copy(uiScreenState = GuessNumberUiState.GameOver(gameInProgress.gameState))
         }
     }
-
 }
