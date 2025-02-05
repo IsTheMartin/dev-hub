@@ -56,6 +56,7 @@ fun GuessNumberScreen(
             modifier = modifier,
             attempts = uiState.gameState.attempts,
             feedback = uiState.gameState.feedback,
+            history = uiState.gameState.history,
             onEvent = onEvent
         )
 

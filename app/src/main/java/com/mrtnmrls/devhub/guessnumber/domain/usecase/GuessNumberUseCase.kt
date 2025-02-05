@@ -12,19 +12,23 @@ class GuessNumberUseCase @Inject constructor(
         gameState: GuessNumberGameState,
         guessNumber: Int
     ): GuessNumberGameState {
+        val newHistory = gameState.history.toMutableList().apply {
+            add(guessNumber.toString())
+        }
+        val newState = gameState.copy(
+            attempts = gameState.attempts + 1,
+            history = newHistory
+        )
         return when {
-            guessNumber < gameState.targetNumber -> gameState.copy(
-                feedback = resourceProvider.getString(R.string.guess_number_too_low),
-                attempts = gameState.attempts + 1
+            guessNumber < gameState.targetNumber -> newState.copy(
+                feedback = resourceProvider.getString(R.string.guess_number_too_low)
             )
 
-            guessNumber > gameState.targetNumber -> gameState.copy(
-                feedback = resourceProvider.getString(R.string.guess_number_too_high),
-                attempts = gameState.attempts + 1
+            guessNumber > gameState.targetNumber -> newState.copy(
+                feedback = resourceProvider.getString(R.string.guess_number_too_high)
             )
 
-            else -> gameState.copy(
-                attempts = gameState.attempts + 1,
+            else -> newState.copy(
                 isWinner = true
             )
         }

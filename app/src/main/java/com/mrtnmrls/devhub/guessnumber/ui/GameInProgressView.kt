@@ -1,10 +1,14 @@
 package com.mrtnmrls.devhub.guessnumber.ui
 
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -12,6 +16,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,6 +35,7 @@ import com.mrtnmrls.devhub.common.ui.view.SecondaryButton
 import com.mrtnmrls.devhub.common.ui.view.VerticalSpacer
 import com.mrtnmrls.devhub.guessnumber.presentation.GuessNumberEvent
 import com.mrtnmrls.devhub.presentation.ui.theme.AzureishWhite
+import com.mrtnmrls.devhub.presentation.ui.theme.CadetBlue
 import com.mrtnmrls.devhub.presentation.ui.theme.DevhubTheme
 import com.mrtnmrls.devhub.presentation.ui.theme.JapaneseIndigo
 import com.mrtnmrls.devhub.presentation.ui.theme.Typography
@@ -39,14 +45,20 @@ internal fun GameInProgressView(
     modifier: Modifier = Modifier,
     attempts: Int,
     feedback: String,
+    history: List<String>,
     onEvent: (GuessNumberEvent) -> Unit
 ) {
     var number by remember { mutableStateOf("") }
+    val lazyListState = rememberLazyListState()
+    LaunchedEffect(key1 = history.size) {
+        if (history.isNotEmpty()) {
+            lazyListState.scrollToItem(history.size - 1)
+        }
+    }
     Column(
         modifier = modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
@@ -56,43 +68,40 @@ internal fun GameInProgressView(
             fontWeight = FontWeight.Bold
         )
         VerticalSpacer(12.dp)
-        OutlinedTextField(
+        InputField(
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            value = number,
+            number = number,
             onValueChange = {
-                if (it.isDigitsOnly()) {
-                    number = it
-                }
+                number = it
             },
-            singleLine = true,
-            maxLines = 1,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Number,
-                showKeyboardOnFocus = true
-            ),
-            keyboardActions = KeyboardActions(
-                onDone = {
-                    onEvent(GuessNumberEvent.OnGuess(number))
-                    number = ""
-                }
-            ),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = AzureishWhite,
-                focusedTextColor = JapaneseIndigo,
-                focusedLabelColor = JapaneseIndigo,
-                unfocusedContainerColor = AzureishWhite,
-                unfocusedTextColor = JapaneseIndigo,
-                unfocusedLabelColor = JapaneseIndigo,
-                cursorColor = JapaneseIndigo,
-                focusedBorderColor = JapaneseIndigo
-            ),
+            onDone = {
+                onEvent(GuessNumberEvent.OnGuess(number))
+                number = ""
+            }
         )
         VerticalSpacer(12.dp)
         Text(
             text = feedback,
             color = JapaneseIndigo
         )
-        VerticalSpacer(32.dp)
+        VerticalSpacer(12.dp)
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(CadetBlue)
+                .height(100.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            reverseLayout = true,
+            state = lazyListState
+        ) {
+            itemsIndexed(history) { index, historyItem ->
+                Text(
+                    text = historyItem,
+                    fontWeight = if (index == history.size - 1) FontWeight.Black else FontWeight.Normal
+                )
+            }
+        }
+        VerticalSpacer(12.dp)
         PrimaryButton(
             modifier = modifier
                 .fillMaxWidth(),
@@ -113,6 +122,43 @@ internal fun GameInProgressView(
     }
 }
 
+@Composable
+private fun InputField(
+    modifier: Modifier = Modifier,
+    number: String,
+    onValueChange: (String) -> Unit,
+    onDone: () -> Unit
+) {
+    OutlinedTextField(
+        modifier = modifier,
+        value = number,
+        onValueChange = {
+            if (it.isDigitsOnly()) {
+                onValueChange(it)
+            }
+        },
+        singleLine = true,
+        maxLines = 1,
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Number,
+            showKeyboardOnFocus = true
+        ),
+        keyboardActions = KeyboardActions(
+            onDone = { onDone() }
+        ),
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedContainerColor = AzureishWhite,
+            focusedTextColor = JapaneseIndigo,
+            focusedLabelColor = JapaneseIndigo,
+            unfocusedContainerColor = AzureishWhite,
+            unfocusedTextColor = JapaneseIndigo,
+            unfocusedLabelColor = JapaneseIndigo,
+            cursorColor = JapaneseIndigo,
+            focusedBorderColor = JapaneseIndigo
+        ),
+    )
+}
+
 @Preview
 @Composable
 private fun PreviewGameInProgressView() {
@@ -120,7 +166,8 @@ private fun PreviewGameInProgressView() {
         Surface {
             GameInProgressView(
                 attempts = 5,
-                feedback = stringResource(R.string.guess_number_too_low)
+                feedback = stringResource(R.string.guess_number_too_low),
+                history = listOf("53", "32", "48", "43", "40", "53", "32", "48", "43", "40")
             ) { }
         }
     }
