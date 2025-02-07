@@ -33,12 +33,12 @@ import com.mrtnmrls.devhub.common.ui.view.VerticalSpacer
 import com.mrtnmrls.devhub.esp8266.domain.model.Esp8266Values
 import com.mrtnmrls.devhub.esp8266.presentation.Esp8266ScreenState
 import com.mrtnmrls.devhub.esp8266.presentation.Esp8266ViewModel
-import com.mrtnmrls.devhub.presentation.ui.theme.AzureishWhite
-import com.mrtnmrls.devhub.presentation.ui.theme.CadetBlue
-import com.mrtnmrls.devhub.presentation.ui.theme.DarkElectricBlue
-import com.mrtnmrls.devhub.presentation.ui.theme.DevhubTheme
-import com.mrtnmrls.devhub.presentation.ui.theme.JapaneseIndigo
-import com.mrtnmrls.devhub.presentation.ui.theme.Typography
+import com.mrtnmrls.devhub.common.ui.theme.AzureishWhite
+import com.mrtnmrls.devhub.common.ui.theme.CadetBlue
+import com.mrtnmrls.devhub.common.ui.theme.DarkElectricBlue
+import com.mrtnmrls.devhub.common.ui.theme.DevhubTheme
+import com.mrtnmrls.devhub.common.ui.theme.JapaneseIndigo
+import com.mrtnmrls.devhub.common.ui.theme.Typography
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 

@@ -12,9 +12,9 @@ import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import com.mrtnmrls.devhub.presentation.ui.theme.AzureishWhite
-import com.mrtnmrls.devhub.presentation.ui.theme.DarkElectricBlue
-import com.mrtnmrls.devhub.presentation.ui.theme.DevhubTheme
+import com.mrtnmrls.devhub.common.ui.theme.AzureishWhite
+import com.mrtnmrls.devhub.common.ui.theme.DarkElectricBlue
+import com.mrtnmrls.devhub.common.ui.theme.DevhubTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

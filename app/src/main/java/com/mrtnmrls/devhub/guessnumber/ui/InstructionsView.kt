@@ -25,11 +25,11 @@ import com.mrtnmrls.devhub.R
 import com.mrtnmrls.devhub.common.ui.view.HorizontalSpacer
 import com.mrtnmrls.devhub.common.ui.view.VerticalSpacer
 import com.mrtnmrls.devhub.guessnumber.presentation.GuessNumberEvent
-import com.mrtnmrls.devhub.presentation.ui.theme.AzureishWhite
-import com.mrtnmrls.devhub.presentation.ui.theme.CadetBlue
-import com.mrtnmrls.devhub.presentation.ui.theme.DevhubTheme
-import com.mrtnmrls.devhub.presentation.ui.theme.JapaneseIndigo
-import com.mrtnmrls.devhub.presentation.ui.theme.Typography
+import com.mrtnmrls.devhub.common.ui.theme.AzureishWhite
+import com.mrtnmrls.devhub.common.ui.theme.CadetBlue
+import com.mrtnmrls.devhub.common.ui.theme.DevhubTheme
+import com.mrtnmrls.devhub.common.ui.theme.JapaneseIndigo
+import com.mrtnmrls.devhub.common.ui.theme.Typography
 
 @Composable
 fun InstructionsView(

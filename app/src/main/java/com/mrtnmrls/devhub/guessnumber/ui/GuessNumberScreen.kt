@@ -19,7 +19,7 @@ import com.mrtnmrls.devhub.guessnumber.presentation.GuessNumberEvent
 import com.mrtnmrls.devhub.guessnumber.presentation.GuessNumberState
 import com.mrtnmrls.devhub.guessnumber.presentation.GuessNumberUiState
 import com.mrtnmrls.devhub.guessnumber.presentation.GuessNumberViewModel
-import com.mrtnmrls.devhub.presentation.ui.theme.AzureishWhite
+import com.mrtnmrls.devhub.common.ui.theme.AzureishWhite
 
 @Composable
 fun GuessNumberContainer(navController: NavHostController) {

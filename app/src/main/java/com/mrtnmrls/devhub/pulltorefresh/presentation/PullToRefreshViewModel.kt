@@ -2,8 +2,8 @@ package com.mrtnmrls.devhub.pulltorefresh.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mrtnmrls.devhub.domain.UseCaseResult
-import com.mrtnmrls.devhub.domain.usecase.GetFakeNintendoGamesDataUseCase
+import com.mrtnmrls.devhub.common.domain.UseCaseResult
+import com.mrtnmrls.devhub.common.domain.usecase.GetFakeNintendoGamesDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow

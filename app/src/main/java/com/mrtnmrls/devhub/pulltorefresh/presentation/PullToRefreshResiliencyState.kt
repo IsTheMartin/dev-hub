@@ -1,6 +1,6 @@
 package com.mrtnmrls.devhub.pulltorefresh.presentation
 
-import com.mrtnmrls.devhub.domain.model.NintendoSwitch
+import com.mrtnmrls.devhub.common.domain.model.NintendoSwitch
 
 data class PullToRefreshResiliencyState(
     val screen: PullToRefreshScreenState = PullToRefreshScreenState.Loading,

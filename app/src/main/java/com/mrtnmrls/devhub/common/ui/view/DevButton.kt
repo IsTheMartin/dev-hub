@@ -13,10 +13,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mrtnmrls.devhub.presentation.ui.theme.AzureishWhite
-import com.mrtnmrls.devhub.presentation.ui.theme.DarkElectricBlue
-import com.mrtnmrls.devhub.presentation.ui.theme.DevhubTheme
-import com.mrtnmrls.devhub.presentation.ui.theme.JapaneseIndigo
+import com.mrtnmrls.devhub.common.ui.theme.AzureishWhite
+import com.mrtnmrls.devhub.common.ui.theme.DarkElectricBlue
+import com.mrtnmrls.devhub.common.ui.theme.DevhubTheme
+import com.mrtnmrls.devhub.common.ui.theme.JapaneseIndigo
 
 @Composable
 fun PrimaryButton(modifier: Modifier = Modifier, buttonText: String, onClick: () -> Unit) {

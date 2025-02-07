@@ -1,7 +1,7 @@
 package com.mrtnmrls.devhub.esp8266.data.repository
 
 import com.mrtnmrls.devhub.esp8266.domain.model.Esp8266
-import com.mrtnmrls.devhub.domain.UseCaseResult
+import com.mrtnmrls.devhub.common.domain.UseCaseResult
 import kotlinx.coroutines.flow.Flow
 
 interface Esp8266Repository {

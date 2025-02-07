@@ -3,7 +3,7 @@ package com.mrtnmrls.devhub.esp8266.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mrtnmrls.devhub.esp8266.domain.model.Esp8266Values
-import com.mrtnmrls.devhub.domain.UseCaseResult
+import com.mrtnmrls.devhub.common.domain.UseCaseResult
 import com.mrtnmrls.devhub.esp8266.domain.usecase.GetEsp8266Data
 import com.mrtnmrls.devhub.esp8266.domain.usecase.ToggleChristmasLightsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

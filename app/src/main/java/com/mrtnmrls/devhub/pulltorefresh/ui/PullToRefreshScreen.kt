@@ -35,11 +35,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.mrtnmrls.devhub.R
 import com.mrtnmrls.devhub.common.ui.view.DevTopAppBar
-import com.mrtnmrls.devhub.domain.model.NintendoSwitch
+import com.mrtnmrls.devhub.common.domain.model.NintendoSwitch
 import com.mrtnmrls.devhub.common.ui.view.LoadingLottieView
-import com.mrtnmrls.devhub.presentation.ui.theme.AzureishWhite
-import com.mrtnmrls.devhub.presentation.ui.theme.JapaneseIndigo
-import com.mrtnmrls.devhub.presentation.ui.theme.Typography
+import com.mrtnmrls.devhub.common.ui.theme.AzureishWhite
+import com.mrtnmrls.devhub.common.ui.theme.JapaneseIndigo
+import com.mrtnmrls.devhub.common.ui.theme.Typography
 import com.mrtnmrls.devhub.pulltorefresh.presentation.PullToRefreshIntent
 import com.mrtnmrls.devhub.pulltorefresh.presentation.PullToRefreshScreenState
 import com.mrtnmrls.devhub.pulltorefresh.presentation.PullToRefreshResiliencyState

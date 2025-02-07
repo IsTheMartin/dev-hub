@@ -7,11 +7,11 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.mrtnmrls.devhub.presentation.ui.theme.AzureishWhite
-import com.mrtnmrls.devhub.presentation.ui.theme.CadetBlue
-import com.mrtnmrls.devhub.presentation.ui.theme.DarkElectricBlue
-import com.mrtnmrls.devhub.presentation.ui.theme.DevhubTheme
-import com.mrtnmrls.devhub.presentation.ui.theme.JapaneseIndigo
+import com.mrtnmrls.devhub.common.ui.theme.AzureishWhite
+import com.mrtnmrls.devhub.common.ui.theme.CadetBlue
+import com.mrtnmrls.devhub.common.ui.theme.DarkElectricBlue
+import com.mrtnmrls.devhub.common.ui.theme.DevhubTheme
+import com.mrtnmrls.devhub.common.ui.theme.JapaneseIndigo
 
 @Composable
 fun DevCheckbox(

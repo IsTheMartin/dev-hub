@@ -14,7 +14,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.mrtnmrls.devhub.R
-import com.mrtnmrls.devhub.presentation.ui.theme.DevhubTheme
+import com.mrtnmrls.devhub.common.ui.theme.DevhubTheme
 
 @Composable
 internal fun LoadingLottieView(modifier: Modifier = Modifier) {

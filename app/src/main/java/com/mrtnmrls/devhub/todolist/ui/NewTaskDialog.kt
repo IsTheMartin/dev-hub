@@ -23,9 +23,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.mrtnmrls.devhub.common.ui.view.PrimaryButton
 import com.mrtnmrls.devhub.common.ui.view.VerticalSpacer
-import com.mrtnmrls.devhub.presentation.ui.theme.AzureishWhite
-import com.mrtnmrls.devhub.presentation.ui.theme.DevhubTheme
-import com.mrtnmrls.devhub.presentation.ui.theme.JapaneseIndigo
+import com.mrtnmrls.devhub.common.ui.theme.AzureishWhite
+import com.mrtnmrls.devhub.common.ui.theme.DevhubTheme
+import com.mrtnmrls.devhub.common.ui.theme.JapaneseIndigo
 import com.mrtnmrls.devhub.todolist.domain.model.Task
 import com.mrtnmrls.devhub.todolist.presentation.TaskEvent
 

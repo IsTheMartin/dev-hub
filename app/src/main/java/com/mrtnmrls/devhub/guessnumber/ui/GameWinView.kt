@@ -17,10 +17,10 @@ import androidx.compose.ui.unit.dp
 import com.mrtnmrls.devhub.R
 import com.mrtnmrls.devhub.common.ui.view.VerticalSpacer
 import com.mrtnmrls.devhub.guessnumber.presentation.GuessNumberEvent
-import com.mrtnmrls.devhub.presentation.ui.theme.DarkElectricBlue
-import com.mrtnmrls.devhub.presentation.ui.theme.DevhubTheme
-import com.mrtnmrls.devhub.presentation.ui.theme.JapaneseIndigo
-import com.mrtnmrls.devhub.presentation.ui.theme.Typography
+import com.mrtnmrls.devhub.common.ui.theme.DarkElectricBlue
+import com.mrtnmrls.devhub.common.ui.theme.DevhubTheme
+import com.mrtnmrls.devhub.common.ui.theme.JapaneseIndigo
+import com.mrtnmrls.devhub.common.ui.theme.Typography
 
 @Composable
 fun GameWinView(
