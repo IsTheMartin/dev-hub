@@ -2,6 +2,7 @@ package com.mrtnmrls.devhub.landing.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -41,6 +42,7 @@ import com.mrtnmrls.devhub.common.ui.theme.AzureishWhite
 import com.mrtnmrls.devhub.common.ui.theme.CadetBlue
 import com.mrtnmrls.devhub.common.ui.theme.DevhubTheme
 import com.mrtnmrls.devhub.landing.presentation.LandingViewModel
+import com.mrtnmrls.devhub.landing.presentation.navigateToLazyMindMapScreen
 
 @Composable
 fun LandingContainer(
@@ -62,6 +64,7 @@ fun handleLandingIntents(intent: DevHubRouteIntent, navController: NavHostContro
         DevHubRouteIntent.OnPullToRefreshClicked -> navigateToPullToRefreshScreen(navController)
         DevHubRouteIntent.OnTodoListClicked -> navigateToTodoListScreen(navController)
         DevHubRouteIntent.OnGuessNumberClicked -> navigateToGuessNumberScreen(navController)
+        DevHubRouteIntent.OnLazyMindMapClicked -> navigateToLazyMindMapScreen(navController)
     }
 }
 
@@ -90,7 +93,10 @@ fun LandingScreen(
     var isProfileDialogVisible by remember { mutableStateOf(false) }
 
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .navigationBarsPadding()
+        ,
         topBar = {
             TopAppBarView { onLandingIntent(it) }
         },
@@ -121,6 +127,11 @@ fun LandingScreen(
             item {
                 LandingButton(text = "Guess the number") {
                     onIntent(DevHubRouteIntent.OnGuessNumberClicked)
+                }
+            }
+            item {
+                LandingButton(text = "Lazy mind map") {
+                    onIntent(DevHubRouteIntent.OnLazyMindMapClicked)
                 }
             }
         }

@@ -9,6 +9,7 @@ import com.mrtnmrls.devhub.landing.presentation.DevHubRoute
 import com.mrtnmrls.devhub.esp8266.ui.Esp8266Container
 import com.mrtnmrls.devhub.guessnumber.ui.GuessNumberContainer
 import com.mrtnmrls.devhub.landing.ui.LandingContainer
+import com.mrtnmrls.devhub.lazymindmap.ui.LazyMindMapContainer
 import com.mrtnmrls.devhub.login.ui.LoginContainer
 import com.mrtnmrls.devhub.pulltorefresh.ui.PullToRefreshContainer
 import com.mrtnmrls.devhub.todolist.ui.TodoListContainer
@@ -39,6 +40,9 @@ fun DevHubContainer() {
         }
         composable(DevHubRoute.GuessNumber.route) {
             GuessNumberContainer(navController)
+        }
+        composable(DevHubRoute.LazyMindMap.route) {
+            LazyMindMapContainer(navController)
         }
     }
 }

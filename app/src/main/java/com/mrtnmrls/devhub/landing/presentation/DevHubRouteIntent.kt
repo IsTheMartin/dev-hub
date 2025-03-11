@@ -5,4 +5,5 @@ sealed interface DevHubRouteIntent {
     data object OnESP8266Clicked : DevHubRouteIntent
     data object OnTodoListClicked : DevHubRouteIntent
     data object OnGuessNumberClicked : DevHubRouteIntent
+    data object OnLazyMindMapClicked : DevHubRouteIntent
 }

@@ -9,6 +9,7 @@ sealed class DevHubRoute(val route: String) {
     data object ChristmasLights : DevHubRoute("christmas_lights")
     data object TodoList : DevHubRoute("todo_list")
     data object GuessNumber : DevHubRoute("guess_number")
+    data object LazyMindMap : DevHubRoute("lazy_mind_map")
 }
 
 fun navigateToLandingScreen(navController: NavHostController) =
@@ -28,3 +29,6 @@ fun navigateToTodoListScreen(navController: NavHostController) =
 
 fun navigateToGuessNumberScreen(navController: NavHostController) =
     navController.navigate(DevHubRoute.GuessNumber.route)
+
+fun navigateToLazyMindMapScreen(navController: NavHostController) =
+    navController.navigate(DevHubRoute.LazyMindMap.route)
