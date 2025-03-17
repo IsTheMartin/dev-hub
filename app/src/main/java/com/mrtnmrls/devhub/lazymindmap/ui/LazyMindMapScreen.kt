@@ -27,7 +27,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntRect
@@ -36,7 +35,6 @@ import androidx.compose.ui.unit.round
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.fastForEach
 import com.mrtnmrls.devhub.common.ui.compositionlocal.LocalNavController
-import com.mrtnmrls.devhub.common.ui.theme.DevhubTheme
 import com.mrtnmrls.devhub.common.ui.view.DevTopAppBar
 import com.mrtnmrls.devhub.lazymindmap.domain.MindMapItem
 import com.mrtnmrls.devhub.lazymindmap.domain.ProcessedMindMapItem
@@ -54,7 +52,43 @@ fun LazyMindMapContainer() {
     }
     val mindMapItems = remember {
         listOf(
-            counterItem(counter) { counter = it },
+            MindMapItem(
+                content = {
+                    Column(
+                        modifier = Modifier
+                            .border(
+                                width = 2.dp,
+                                color = Color.Gray
+                            )
+                            .padding(8.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = counter.toString(),
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 26.sp
+                        )
+                        Row {
+                            Button(
+                                onClick = { counter-- }
+                            ) {
+                                Text("Dec")
+                            }
+                            Spacer(Modifier.width(8.dp))
+                            Button(
+                                onClick = { counter++ }
+                            ) {
+                                Text("Inc")
+                            }
+                        }
+                    }
+                },
+                constraints = Constraints(
+                    maxWidth = 2000,
+                    maxHeight = 1500
+                ),
+                offset = Offset.Zero
+            ),
             MindMapItem(
                 offset = Offset(
                     x = -700f,
@@ -195,41 +229,3 @@ fun LazyMindMapScreen(
         }
     }
 }
-
-private fun counterItem(counter: Int, onChangedCounter: (Int) -> Unit) = MindMapItem(
-    content = {
-        Column(
-            modifier = Modifier
-                .border(
-                    width = 2.dp,
-                    color = Color.Gray
-                )
-                .padding(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = counter.toString(),
-                fontWeight = FontWeight.Bold,
-                fontSize = 26.sp
-            )
-            Row {
-                Button(
-                    onClick = { onChangedCounter(counter - 1) }
-                ) {
-                    Text("Dec")
-                }
-                Spacer(Modifier.width(8.dp))
-                Button(
-                    onClick = { onChangedCounter(counter + 1) }
-                ) {
-                    Text("Inc")
-                }
-            }
-        }
-    },
-    constraints = Constraints(
-        maxWidth = 2000,
-        maxHeight = 1500
-    ),
-    offset = Offset.Zero
-)
