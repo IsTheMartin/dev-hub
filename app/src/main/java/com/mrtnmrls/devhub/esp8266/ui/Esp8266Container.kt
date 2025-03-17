@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.mrtnmrls.devhub.common.ui.compositionlocal.LocalNavController
 import com.mrtnmrls.devhub.common.ui.view.DevTopAppBar
 import com.mrtnmrls.devhub.common.ui.view.LoadingLottieView
 import com.mrtnmrls.devhub.common.ui.view.VerticalSpacer
@@ -43,9 +44,8 @@ import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
 @Composable
-internal fun Esp8266Container(
-    navController: NavHostController
-) {
+internal fun Esp8266Container() {
+    val navController = LocalNavController.current
     val esp8266ViewModel = hiltViewModel<Esp8266ViewModel>()
     val state by esp8266ViewModel.state.collectAsState()
     Scaffold(

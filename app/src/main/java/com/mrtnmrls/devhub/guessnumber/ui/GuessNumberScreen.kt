@@ -13,6 +13,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.mrtnmrls.devhub.R
+import com.mrtnmrls.devhub.common.ui.compositionlocal.LocalNavController
 import com.mrtnmrls.devhub.common.ui.view.DevTopAppBar
 import com.mrtnmrls.devhub.common.ui.view.PrimaryButton
 import com.mrtnmrls.devhub.guessnumber.presentation.GuessNumberEvent
@@ -22,7 +23,8 @@ import com.mrtnmrls.devhub.guessnumber.presentation.GuessNumberViewModel
 import com.mrtnmrls.devhub.common.ui.theme.AzureishWhite
 
 @Composable
-fun GuessNumberContainer(navController: NavHostController) {
+fun GuessNumberContainer() {
+    val navController = LocalNavController.current
     val viewModel = hiltViewModel<GuessNumberViewModel>()
     val state by viewModel.state.collectAsStateWithLifecycle()
 

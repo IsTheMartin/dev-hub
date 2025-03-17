@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.mrtnmrls.devhub.common.ui.compositionlocal.LocalNavController
 import com.mrtnmrls.devhub.common.ui.view.BottomAppBarView
 import com.mrtnmrls.devhub.login.ui.ProfileDialog
 import com.mrtnmrls.devhub.login.ui.TopAppBarView
@@ -45,9 +46,8 @@ import com.mrtnmrls.devhub.landing.presentation.LandingViewModel
 import com.mrtnmrls.devhub.landing.presentation.navigateToLazyMindMapScreen
 
 @Composable
-fun LandingContainer(
-    navController: NavHostController
-) {
+fun LandingContainer() {
+    val navController = LocalNavController.current
     val viewModel = hiltViewModel<LandingViewModel>()
     val state by viewModel.state.collectAsStateWithLifecycle()
     LandingScreen(

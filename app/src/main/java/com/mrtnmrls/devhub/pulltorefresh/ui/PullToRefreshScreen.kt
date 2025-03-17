@@ -36,6 +36,7 @@ import androidx.navigation.NavHostController
 import com.mrtnmrls.devhub.R
 import com.mrtnmrls.devhub.common.ui.view.DevTopAppBar
 import com.mrtnmrls.devhub.common.domain.model.NintendoSwitch
+import com.mrtnmrls.devhub.common.ui.compositionlocal.LocalNavController
 import com.mrtnmrls.devhub.common.ui.view.LoadingLottieView
 import com.mrtnmrls.devhub.common.ui.theme.AzureishWhite
 import com.mrtnmrls.devhub.common.ui.theme.JapaneseIndigo
@@ -46,7 +47,8 @@ import com.mrtnmrls.devhub.pulltorefresh.presentation.PullToRefreshResiliencySta
 import com.mrtnmrls.devhub.pulltorefresh.presentation.PullToRefreshViewModel
 
 @Composable
-internal fun PullToRefreshContainer(navController: NavHostController) {
+internal fun PullToRefreshContainer() {
+    val navController = LocalNavController.current
     val pullToRefreshViewModel = hiltViewModel<PullToRefreshViewModel>()
     val state by pullToRefreshViewModel.state.collectAsStateWithLifecycle()
 

@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.mrtnmrls.devhub.common.ui.compositionlocal.LocalNavController
 import com.mrtnmrls.devhub.landing.presentation.DevHubRoute
 import com.mrtnmrls.devhub.esp8266.ui.Esp8266Container
 import com.mrtnmrls.devhub.guessnumber.ui.GuessNumberContainer
@@ -16,7 +17,7 @@ import com.mrtnmrls.devhub.todolist.ui.TodoListContainer
 
 @Composable
 fun DevHubContainer() {
-    val navController = rememberNavController()
+    val navController = LocalNavController.current
 
     NavHost(
         modifier = Modifier,
@@ -24,25 +25,25 @@ fun DevHubContainer() {
         startDestination = DevHubRoute.Login.route
     ) {
         composable(DevHubRoute.Login.route) {
-            LoginContainer(navController)
+            LoginContainer()
         }
         composable(DevHubRoute.Landing.route) {
-            LandingContainer(navController)
+            LandingContainer()
         }
         composable(DevHubRoute.PullToRefresh.route) {
-            PullToRefreshContainer(navController)
+            PullToRefreshContainer()
         }
         composable(DevHubRoute.ChristmasLights.route) {
-            Esp8266Container(navController)
+            Esp8266Container()
         }
         composable(DevHubRoute.TodoList.route) {
-            TodoListContainer(navController)
+            TodoListContainer()
         }
         composable(DevHubRoute.GuessNumber.route) {
-            GuessNumberContainer(navController)
+            GuessNumberContainer()
         }
         composable(DevHubRoute.LazyMindMap.route) {
-            LazyMindMapContainer(navController)
+            LazyMindMapContainer()
         }
     }
 }

@@ -1,5 +1,8 @@
 package com.mrtnmrls.devhub.login.ui
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.Network
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,6 +23,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
@@ -41,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.mrtnmrls.devhub.common.ui.compositionlocal.LocalNavController
 import com.mrtnmrls.devhub.common.ui.view.LoadingLottieView
 import com.mrtnmrls.devhub.login.presentation.LoginEffect
 import com.mrtnmrls.devhub.login.presentation.LoginIntent
@@ -56,13 +62,18 @@ import com.mrtnmrls.devhub.common.ui.theme.Typography
 import com.mrtnmrls.devhub.login.presentation.LoginViewModel
 
 @Composable
-internal fun LoginContainer(
-    navController: NavHostController
-) {
+internal fun LoginContainer() {
+    val navController = LocalNavController.current
     val loginViewModel = hiltViewModel<LoginViewModel>()
     val state by loginViewModel.state.collectAsStateWithLifecycle()
-    LoginScreen(state = state, onIntent = loginViewModel::dispatchIntent)
+    var isNetworkConnected by remember { mutableStateOf(false) }
+    LoginScreen(
+        state = state,
+        onIntent = loginViewModel::dispatchIntent,
+        isNetworkConnected = isNetworkConnected
+    )
     HandleLoginEffects(state.effect, navController)
+    NetworkConnectivityChecker { isNetworkConnected = it }
 }
 
 @Composable
@@ -78,6 +89,7 @@ private fun HandleLoginEffects(effect: LoginEffect, navController: NavHostContro
 @Composable
 private fun LoginScreen(
     state: LoginState,
+    isNetworkConnected: Boolean,
     onIntent: (LoginIntent) -> Unit,
 ) {
     when (state.screenState) {
@@ -85,7 +97,8 @@ private fun LoginScreen(
         LoginScreenState.Loading -> LoadingLottieView()
         is LoginScreenState.SuccessContent -> LoginContentView(
             onIntent = onIntent,
-            uiState = state.screenState
+            uiState = state.screenState,
+            isNetworkConnected = isNetworkConnected
         )
     }
 }
@@ -102,8 +115,9 @@ private fun LoginErrorView(modifier: Modifier = Modifier) {
 @Composable
 private fun LoginContentView(
     modifier: Modifier = Modifier,
+    uiState: LoginScreenState.SuccessContent,
+    isNetworkConnected: Boolean,
     onIntent: (LoginIntent) -> Unit,
-    uiState: LoginScreenState.SuccessContent
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
@@ -151,7 +165,7 @@ private fun LoginContentView(
                     onIntent(LoginIntent.OnLogin(email, password))
                 },
                 modifier = Modifier.fillMaxWidth(),
-                enabled = !uiState.isLogIn,
+                enabled = !uiState.isLogIn && isNetworkConnected,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MetallicBlue,
                     contentColor = Khaki
@@ -262,12 +276,42 @@ private fun PasswordTextField(
     )
 }
 
+@Composable
+private fun NetworkConnectivityChecker(onNetworkChanged: (Boolean) -> Unit) {
+    val context = LocalContext.current
+
+    DisposableEffect(context) {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkCallback = object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                onNetworkChanged(true)
+            }
+
+            override fun onLost(network: Network) {
+                onNetworkChanged(false)
+            }
+        }
+
+        connectivityManager.registerDefaultNetworkCallback(networkCallback)
+
+        onDispose {
+            connectivityManager.unregisterNetworkCallback(networkCallback)
+        }
+    }
+}
+
 @Preview
 @Composable
 private fun PreviewLoginContent() {
     DevhubTheme {
         Surface {
-            LoginContentView(onIntent = {}, uiState = LoginScreenState.SuccessContent())
+            LoginContentView(
+                onIntent = {},
+                uiState = LoginScreenState.SuccessContent(),
+                modifier = Modifier,
+                isNetworkConnected = true
+            )
         }
     }
 }

@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.mrtnmrls.devhub.common.ui.compositionlocal.LocalNavController
 import com.mrtnmrls.devhub.common.ui.view.DevCheckbox
 import com.mrtnmrls.devhub.common.ui.view.DevTopAppBar
 import com.mrtnmrls.devhub.common.ui.view.LoadingLottieView
@@ -52,9 +53,8 @@ import com.mrtnmrls.devhub.todolist.presentation.TaskUiState
 import com.mrtnmrls.devhub.todolist.presentation.TaskViewModel
 
 @Composable
-internal fun TodoListContainer(
-    navController: NavHostController
-) {
+internal fun TodoListContainer() {
+    val navController = LocalNavController.current
     val viewModel = hiltViewModel<TaskViewModel>()
     val state by viewModel.state.collectAsStateWithLifecycle()
 
