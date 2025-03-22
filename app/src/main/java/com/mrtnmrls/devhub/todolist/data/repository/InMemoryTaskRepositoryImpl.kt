@@ -21,6 +21,12 @@ class InMemoryTaskRepositoryImpl: TaskRepository {
                 title = "Second task",
                 description = "Description of task",
                 isCompleted = true
+            ),
+            Task(
+                uid = "12391293",
+                title = "A long task title, this can be a problem with this design",
+                description = "Or maybe not, we need to see when the user taps \"Add task\" \n\nLet's see!",
+                isCompleted = false
             )
         )
     )

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,9 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.mrtnmrls.devhub.R
 import com.mrtnmrls.devhub.common.ui.view.VerticalSpacer
 import com.mrtnmrls.devhub.guessnumber.presentation.GuessNumberEvent
-import com.mrtnmrls.devhub.common.ui.theme.DarkElectricBlue
 import com.mrtnmrls.devhub.common.ui.theme.DevhubTheme
-import com.mrtnmrls.devhub.common.ui.theme.JapaneseIndigo
 import com.mrtnmrls.devhub.common.ui.theme.Typography
 
 @Composable
@@ -38,19 +37,19 @@ fun GameOverView(
         Text(
             text = targetNumber.toString(),
             style = Typography.displayLarge,
-            color = JapaneseIndigo,
+            color = MaterialTheme.colorScheme.primary,
             fontWeight = FontWeight.Bold
         )
         VerticalSpacer(8.dp)
         Text(
             text = stringResource(R.string.guess_number_game_over),
-            color = JapaneseIndigo,
+            color = MaterialTheme.colorScheme.primary,
             style = Typography.titleLarge,
             fontWeight = FontWeight.Bold
         )
         Text(
             text = "You lost in $attempts attempts",
-            color = DarkElectricBlue,
+            color = MaterialTheme.colorScheme.secondary,
             style = Typography.bodyMedium
         )
         VerticalSpacer(32.dp)

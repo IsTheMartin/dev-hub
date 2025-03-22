@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -35,6 +36,7 @@ import com.mrtnmrls.devhub.landing.presentation.LandingIntent
 import com.mrtnmrls.devhub.landing.presentation.UserProfileState
 import com.mrtnmrls.devhub.common.ui.theme.DevhubTheme
 import com.mrtnmrls.devhub.common.ui.theme.Typography
+import com.mrtnmrls.devhub.common.ui.view.SecondaryButton
 
 @Composable
 internal fun ProfileDialog(
@@ -63,7 +65,7 @@ private fun ProfileDialogContainer(
     Box(
         modifier = Modifier
             .clip(RoundedCornerShape(10.dp))
-            .background(Color.DarkGray)
+            .background(MaterialTheme.colorScheme.background)
     ) {
         Column {
             ProfileDialogTitle(
@@ -91,13 +93,13 @@ private fun ProfileDialogTitle(onDismissDialog: () -> Unit) {
             Icon(
                 imageVector = Icons.Default.Close,
                 contentDescription = null,
-                tint = Color.White
+                tint = MaterialTheme.colorScheme.primary
             )
         }
         Text(
             modifier = Modifier.align(Alignment.Center),
             text = "DevHub",
-            color = Color.White,
+            color = MaterialTheme.colorScheme.primary,
             style = Typography.titleLarge,
             fontWeight = FontWeight.Bold
         )
@@ -113,7 +115,7 @@ private fun ProfileDialogContent(
             .fillMaxWidth()
             .padding(8.dp)
             .clip(RoundedCornerShape(10.dp))
-            .background(Color.Gray)
+            .background(MaterialTheme.colorScheme.secondaryContainer)
     ) {
         Column {
             UserProfileInformation(userProfileState)
@@ -135,19 +137,19 @@ private fun UserProfileInformation(
                 .size(48.dp),
             imageVector = Icons.Default.AccountCircle,
             contentDescription = "",
-            colorFilter = ColorFilter.tint(color = Color.White)
+            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.secondary)
         )
         Spacer(modifier = Modifier.width(16.dp))
         Column {
             Text(
                 text = userProfileState.displayName,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.secondary,
                 style = Typography.titleMedium,
                 maxLines = 1
             )
             Text(
                 text = userProfileState.email,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.secondary,
                 style = Typography.bodyMedium,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1
@@ -158,15 +160,13 @@ private fun UserProfileInformation(
 
 @Composable
 private fun SignOutButton(onSignOut: () -> Unit) {
-    OutlinedButton(
+    SecondaryButton (
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp, vertical = 8.dp),
+            .padding(horizontal = 8.dp, vertical = 4.dp),
         onClick = onSignOut,
-        shape = RoundedCornerShape(10.dp)
-    ) {
-        Text(text = "Sign out", color = Color.White)
-    }
+        buttonText = "Sign out",
+    )
 }
 
 @Preview

@@ -1,6 +1,7 @@
 package com.mrtnmrls.devhub.todolist.ui
 
-import androidx.compose.foundation.background
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -29,21 +31,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
 import com.mrtnmrls.devhub.common.ui.compositionlocal.LocalNavController
 import com.mrtnmrls.devhub.common.ui.view.DevCheckbox
 import com.mrtnmrls.devhub.common.ui.view.DevTopAppBar
 import com.mrtnmrls.devhub.common.ui.view.LoadingLottieView
-import com.mrtnmrls.devhub.common.ui.theme.AzureishWhite
-import com.mrtnmrls.devhub.common.ui.theme.CadetBlue
 import com.mrtnmrls.devhub.common.ui.theme.DevhubTheme
-import com.mrtnmrls.devhub.common.ui.theme.JapaneseIndigo
 import com.mrtnmrls.devhub.common.ui.theme.Typography
 import com.mrtnmrls.devhub.todolist.domain.model.Task
 import com.mrtnmrls.devhub.todolist.presentation.TaskDialogState
@@ -60,8 +61,7 @@ internal fun TodoListContainer() {
 
     Scaffold(
         modifier = Modifier
-            .fillMaxSize()
-            .background(AzureishWhite),
+            .fillMaxSize(),
         topBar = {
             DevTopAppBar(
                 title = "Todo list"
@@ -70,13 +70,13 @@ internal fun TodoListContainer() {
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { viewModel.handleEvent(TaskEvent.OnShowDialog) },
-                containerColor = CadetBlue,
+                containerColor = MaterialTheme.colorScheme.secondaryContainer,
                 shape = RoundedCornerShape(8.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = "Add task",
-                    tint = JapaneseIndigo
+                    tint = MaterialTheme.colorScheme.secondary
                 )
             }
         }
@@ -104,7 +104,6 @@ private fun TodoListScreen(
         TaskScreenState.EmptyTasks -> Box(
             modifier = modifier
                 .fillMaxSize()
-                .background(Color.Red)
         )
 
         TaskScreenState.Loading -> LoadingLottieView()
@@ -136,18 +135,23 @@ private fun TasksListView(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .background(AzureishWhite)
     ) {
         items(tasks) { task ->
-            TaskItem(task) { onTaskEvent(it) }
+            TaskItem(
+                task = task,
+                modifier = Modifier.animateItem()
+            ) { onTaskEvent(it) }
         }
     }
 }
 
 @Composable
-private fun TaskItem(task: Task, onTaskEvent: (TaskEvent) -> Unit) {
+private fun TaskItem(
+    task: Task,
+    modifier: Modifier = Modifier,
+    onTaskEvent: (TaskEvent) -> Unit) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
             .clickable { onTaskEvent(TaskEvent.ToggleTask(task.uid)) }
@@ -158,7 +162,7 @@ private fun TaskItem(task: Task, onTaskEvent: (TaskEvent) -> Unit) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             DevCheckbox(
-                modifier = Modifier.weight(0.2f),
+                modifier = Modifier,
                 isChecked = task.isCompleted,
                 onCheckedChange = { onTaskEvent(TaskEvent.ToggleTask(task.uid)) }
             )
@@ -167,33 +171,81 @@ private fun TaskItem(task: Task, onTaskEvent: (TaskEvent) -> Unit) {
                     .fillMaxWidth()
                     .weight(1f)
             ) {
-                Text(
+                AnimatedCheckedText(
                     text = task.title,
+                    isChecked = task.isCompleted,
                     style = Typography.titleMedium,
-                    textDecoration = if (task.isCompleted) TextDecoration.LineThrough else TextDecoration.None,
-                    color = JapaneseIndigo
+                    color = MaterialTheme.colorScheme.primary
                 )
-                Text(
+                AnimatedCheckedText(
                     text = task.description,
+                    isChecked = task.isCompleted,
                     style = Typography.bodySmall,
-                    textDecoration = if (task.isCompleted) TextDecoration.LineThrough else TextDecoration.None,
-                    color = JapaneseIndigo
+                    color = MaterialTheme.colorScheme.secondary
                 )
             }
             IconButton(
                 modifier = Modifier
                     .size(24.dp)
-                    .weight(0.3f),
+                    .weight(0.2f),
                 onClick = { onTaskEvent(TaskEvent.DeleteTask(task.uid)) }
             ) {
                 Icon(
                     imageVector = Icons.Default.Delete,
                     contentDescription = "Delete task",
-                    tint = JapaneseIndigo
+                    tint = MaterialTheme.colorScheme.primary
                 )
             }
         }
     }
+}
+
+@Composable
+private fun AnimatedCheckedText(
+    text: String,
+    isChecked: Boolean = false,
+    style: TextStyle,
+    color: Color = MaterialTheme.colorScheme.primary,
+    animationDurationMillis: Int = 1000
+) {
+    val progress = remember { Animatable(if (isChecked) 1f else 0f) }
+    var textLayoutResult by remember { mutableStateOf<TextLayoutResult?>(null) }
+
+    LaunchedEffect(isChecked) {
+        progress.animateTo(
+            targetValue = if (isChecked) 1f else 0f,
+            animationSpec = tween(durationMillis = animationDurationMillis)
+        )
+    }
+
+    Text(
+        text = text,
+        style = style,
+        color = color,
+        onTextLayout = { textLayoutResult = it },
+        modifier = Modifier
+            .drawWithContent {
+            drawContent()
+
+            textLayoutResult?.let { layoutResult ->
+                val lineCount = layoutResult.lineCount
+                for (i in 0 until lineCount) {
+                    val lineStart = layoutResult.getLineLeft(i)
+                    val lineEnd = layoutResult.getLineRight(i)
+                    val lineWidth = lineEnd - lineStart
+                    val animatedWidth = lineWidth * progress.value
+                    val linePositionY = layoutResult.getLineTop(i) + (layoutResult.getLineBottom(i) - layoutResult.getLineTop(i)) / 2
+
+                    drawLine(
+                        color = color,
+                        start = Offset(0f, linePositionY),
+                        end = Offset(animatedWidth, linePositionY),
+                        strokeWidth = 4f
+                    )
+                }
+            }
+        }
+    )
 }
 
 @Preview
@@ -215,6 +267,12 @@ private fun PreviewTaskItem() {
                         "My new task",
                         "Description of the task",
                         true
+                    ),
+                    Task(
+                        uid = "12391293",
+                        title = "A long task title, this can be a problem with this design",
+                        description = "Or maybe not, we need to see when the user taps \"Add task\" \n\nLet's see!",
+                        isCompleted = false
                     )
                 )
             ) { }

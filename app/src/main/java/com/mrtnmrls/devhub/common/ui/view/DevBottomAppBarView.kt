@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -14,8 +15,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mrtnmrls.devhub.common.ui.theme.AzureishWhite
-import com.mrtnmrls.devhub.common.ui.theme.DarkElectricBlue
 import com.mrtnmrls.devhub.common.ui.theme.DevhubTheme
 
 @Composable
@@ -23,8 +22,8 @@ internal fun BottomAppBarView(modifier: Modifier = Modifier) {
     BottomAppBar(
         modifier = modifier
             .height(60.dp),
-        contentColor = AzureishWhite,
-        containerColor = DarkElectricBlue
+        contentColor = MaterialTheme.colorScheme.primary,
+        containerColor = MaterialTheme.colorScheme.secondaryContainer
     ) {
         val annotatedString = buildAnnotatedString {
             append("Made by ")

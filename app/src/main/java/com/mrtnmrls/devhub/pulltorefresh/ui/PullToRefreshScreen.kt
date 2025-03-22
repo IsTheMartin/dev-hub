@@ -3,7 +3,6 @@
 package com.mrtnmrls.devhub.pulltorefresh.ui
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +16,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
@@ -32,14 +32,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
 import com.mrtnmrls.devhub.R
 import com.mrtnmrls.devhub.common.ui.view.DevTopAppBar
 import com.mrtnmrls.devhub.common.domain.model.NintendoSwitch
 import com.mrtnmrls.devhub.common.ui.compositionlocal.LocalNavController
 import com.mrtnmrls.devhub.common.ui.view.LoadingLottieView
-import com.mrtnmrls.devhub.common.ui.theme.AzureishWhite
-import com.mrtnmrls.devhub.common.ui.theme.JapaneseIndigo
 import com.mrtnmrls.devhub.common.ui.theme.Typography
 import com.mrtnmrls.devhub.pulltorefresh.presentation.PullToRefreshIntent
 import com.mrtnmrls.devhub.pulltorefresh.presentation.PullToRefreshScreenState
@@ -88,7 +85,7 @@ private fun PullToRefreshScreen(
 
         PullToRefreshScreenState.Loading -> {
             pullRefreshState.endRefresh()
-            LoadingLottieView(modifier.background(AzureishWhite))
+            LoadingLottieView(modifier)
         }
 
         is PullToRefreshScreenState.SuccessContent -> ContentView(
@@ -116,8 +113,7 @@ private fun ErrorResiliencyView(
     Box(
         modifier = modifier
             .nestedScroll(pullRefreshState.nestedScrollConnection)
-            .fillMaxSize()
-            .background(AzureishWhite),
+            .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         PullToRefreshContainer(
@@ -137,7 +133,7 @@ private fun ErrorResiliencyView(
             Spacer(modifier = Modifier.height(32.dp))
             Text(
                 text = "No internet connection",
-                color = JapaneseIndigo,
+                color = MaterialTheme.colorScheme.primary,
                 style = Typography.headlineSmall
             )
         }
@@ -160,8 +156,7 @@ private fun ContentView(
     Box(
         modifier = modifier
             .nestedScroll(pullRefreshState.nestedScrollConnection)
-            .fillMaxSize()
-            .background(AzureishWhite),
+            .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         PullToRefreshContainer(
@@ -182,7 +177,7 @@ private fun ContentView(
                 Spacer(modifier = Modifier.height(32.dp))
                 Text(
                     text = "No internet connection",
-                    color = JapaneseIndigo,
+                    color = MaterialTheme.colorScheme.primary,
                     style = Typography.headlineSmall
                 )
             }
@@ -198,7 +193,7 @@ private fun ContentView(
                     Row {
                         Text(
                             text = it.name,
-                            color = JapaneseIndigo,
+                            color = MaterialTheme.colorScheme.primary,
                             style = Typography.bodyLarge
                         )
                     }

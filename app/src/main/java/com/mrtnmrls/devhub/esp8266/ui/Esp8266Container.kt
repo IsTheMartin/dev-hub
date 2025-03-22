@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
@@ -22,6 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,11 +36,7 @@ import com.mrtnmrls.devhub.common.ui.view.VerticalSpacer
 import com.mrtnmrls.devhub.esp8266.domain.model.Esp8266Values
 import com.mrtnmrls.devhub.esp8266.presentation.Esp8266ScreenState
 import com.mrtnmrls.devhub.esp8266.presentation.Esp8266ViewModel
-import com.mrtnmrls.devhub.common.ui.theme.AzureishWhite
-import com.mrtnmrls.devhub.common.ui.theme.CadetBlue
-import com.mrtnmrls.devhub.common.ui.theme.DarkElectricBlue
 import com.mrtnmrls.devhub.common.ui.theme.DevhubTheme
-import com.mrtnmrls.devhub.common.ui.theme.JapaneseIndigo
 import com.mrtnmrls.devhub.common.ui.theme.Typography
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
@@ -74,21 +72,18 @@ internal fun Esp8266Screen(
         Esp8266ScreenState.Error -> {
             Box(
                 modifier = modifier
-                    .background(CadetBlue)
             )
         }
 
         Esp8266ScreenState.Loading -> {
             LoadingLottieView(
                 modifier = modifier
-                    .background(AzureishWhite)
             )
         }
 
         is Esp8266ScreenState.SuccessfulContent -> {
             ContentView(
-                modifier = modifier
-                    .background(AzureishWhite),
+                modifier = modifier,
                 state = uiState,
                 onToggleChristmasLights = onChange
             )
@@ -130,21 +125,21 @@ private fun LastUpdateView(modifier: Modifier = Modifier, lastUpdate: String) {
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(4.dp))
-            .background(CadetBlue)
+            .background(MaterialTheme.colorScheme.secondaryContainer)
             .padding(8.dp)
     ) {
         Column {
             Text(
                 text = "Last update",
                 style = Typography.bodyLarge,
-                color = JapaneseIndigo
+                color = MaterialTheme.colorScheme.secondary
             )
             VerticalSpacer(8.dp)
             Text(
                 text = lastUpdate,
                 style = Typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
-                color = JapaneseIndigo
+                color = MaterialTheme.colorScheme.primary
             )
         }
     }
@@ -163,14 +158,14 @@ private fun PinStateView(modifier: Modifier = Modifier, pinState: Boolean) {
             Text(
                 text = "Pin state",
                 style = Typography.bodyLarge,
-                color = JapaneseIndigo
+                color = MaterialTheme.colorScheme.secondary
             )
             VerticalSpacer(8.dp)
             Text(
                 text = if (pinState) "On" else "Off",
                 style = Typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
-                color = JapaneseIndigo
+                color = MaterialTheme.colorScheme.primary
             )
         }
     }
@@ -182,21 +177,21 @@ private fun TimeAliveView(modifier: Modifier = Modifier, timeAlive: Long) {
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(4.dp))
-            .background(CadetBlue)
+            .background(MaterialTheme.colorScheme.secondaryContainer)
             .padding(8.dp)
     ) {
         Column {
             Text(
                 text = "Time alive",
                 style = Typography.bodyLarge,
-                color = JapaneseIndigo
+                color = MaterialTheme.colorScheme.secondary
             )
             VerticalSpacer(8.dp)
             Text(
                 text = timeAlive.toDuration(DurationUnit.MINUTES).toString(),
                 style = Typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
-                color = JapaneseIndigo
+                color = MaterialTheme.colorScheme.primary
             )
         }
     }
@@ -219,33 +214,27 @@ private fun ChristmasLightsView(
             Text(
                 text = "Christmas lights state",
                 style = Typography.bodyLarge,
-                color = JapaneseIndigo
+                color = MaterialTheme.colorScheme.secondary
             )
             VerticalSpacer(8.dp)
             Text(
                 text = if (lightsState) "On" else "Off",
                 style = Typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
-                color = JapaneseIndigo
+                color = MaterialTheme.colorScheme.primary
             )
             Switch(
                 checked = lightsState,
-                onCheckedChange = { onToggleChristmasLights() },
-                colors = SwitchDefaults.colors(
-                    checkedBorderColor = JapaneseIndigo,
-                    checkedThumbColor = JapaneseIndigo,
-                    checkedTrackColor = AzureishWhite,
-                    uncheckedThumbColor = DarkElectricBlue,
-                    uncheckedBorderColor = JapaneseIndigo,
-                    uncheckedTrackColor = AzureishWhite,
-                )
+                onCheckedChange = { onToggleChristmasLights() }
             )
         }
     }
 }
 
+@Composable
 private fun getPinStateCardBackgroundColor(pinState: Boolean) =
-    if (pinState) CadetBlue else DarkElectricBlue
+    if (pinState) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.tertiaryContainer
+
 
 @Preview
 @Composable

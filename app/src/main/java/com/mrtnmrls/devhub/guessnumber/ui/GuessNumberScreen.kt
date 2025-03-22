@@ -4,14 +4,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
 import com.mrtnmrls.devhub.R
 import com.mrtnmrls.devhub.common.ui.compositionlocal.LocalNavController
 import com.mrtnmrls.devhub.common.ui.view.DevTopAppBar
@@ -20,7 +21,6 @@ import com.mrtnmrls.devhub.guessnumber.presentation.GuessNumberEvent
 import com.mrtnmrls.devhub.guessnumber.presentation.GuessNumberState
 import com.mrtnmrls.devhub.guessnumber.presentation.GuessNumberUiState
 import com.mrtnmrls.devhub.guessnumber.presentation.GuessNumberViewModel
-import com.mrtnmrls.devhub.common.ui.theme.AzureishWhite
 
 @Composable
 fun GuessNumberContainer() {
@@ -39,8 +39,7 @@ fun GuessNumberContainer() {
     ) { paddingValues ->
         GuessNumberScreen(
             modifier = Modifier
-                .padding(paddingValues)
-                .background(AzureishWhite),
+                .padding(paddingValues),
             state = state,
             onEvent = viewModel::handleEvents
         )

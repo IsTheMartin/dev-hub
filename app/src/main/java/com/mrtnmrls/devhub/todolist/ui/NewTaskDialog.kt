@@ -6,8 +6,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,9 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.mrtnmrls.devhub.common.ui.view.PrimaryButton
 import com.mrtnmrls.devhub.common.ui.view.VerticalSpacer
-import com.mrtnmrls.devhub.common.ui.theme.AzureishWhite
 import com.mrtnmrls.devhub.common.ui.theme.DevhubTheme
-import com.mrtnmrls.devhub.common.ui.theme.JapaneseIndigo
 import com.mrtnmrls.devhub.todolist.domain.model.Task
 import com.mrtnmrls.devhub.todolist.presentation.TaskEvent
 
@@ -42,7 +40,7 @@ internal fun NewTaskDialog(
         Box(
             modifier = Modifier
                 .clip(RoundedCornerShape(8.dp))
-                .background(AzureishWhite)
+                .background(MaterialTheme.colorScheme.background)
                 .padding(vertical = 8.dp, horizontal = 16.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -55,17 +53,7 @@ internal fun NewTaskDialog(
                         Text(text = "Title")
                     },
                     maxLines = 1,
-                    singleLine = true,
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedContainerColor = AzureishWhite,
-                        focusedTextColor = JapaneseIndigo,
-                        focusedLabelColor = JapaneseIndigo,
-                        unfocusedContainerColor = AzureishWhite,
-                        unfocusedTextColor = JapaneseIndigo,
-                        unfocusedLabelColor = JapaneseIndigo,
-                        cursorColor = JapaneseIndigo,
-                        focusedBorderColor = JapaneseIndigo
-                    )
+                    singleLine = true
                 )
                 VerticalSpacer(8.dp)
                 OutlinedTextField(
@@ -76,17 +64,7 @@ internal fun NewTaskDialog(
                         Text(text = "Description")
                     },
                     minLines = 3,
-                    maxLines = 3,
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedContainerColor = AzureishWhite,
-                        focusedTextColor = JapaneseIndigo,
-                        focusedLabelColor = JapaneseIndigo,
-                        unfocusedContainerColor = AzureishWhite,
-                        unfocusedTextColor = JapaneseIndigo,
-                        unfocusedLabelColor = JapaneseIndigo,
-                        cursorColor = JapaneseIndigo,
-                        focusedBorderColor = JapaneseIndigo
-                    )
+                    maxLines = 3
                 )
                 VerticalSpacer(8.dp)
                 PrimaryButton(

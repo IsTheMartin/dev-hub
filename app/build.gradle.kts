@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.mrtnmrls.devhub"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.mrtnmrls.devhub"

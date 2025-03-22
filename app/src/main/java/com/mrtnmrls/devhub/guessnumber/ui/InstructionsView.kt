@@ -1,5 +1,6 @@
 package com.mrtnmrls.devhub.guessnumber.ui
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,12 +13,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -25,10 +28,7 @@ import com.mrtnmrls.devhub.R
 import com.mrtnmrls.devhub.common.ui.view.HorizontalSpacer
 import com.mrtnmrls.devhub.common.ui.view.VerticalSpacer
 import com.mrtnmrls.devhub.guessnumber.presentation.GuessNumberEvent
-import com.mrtnmrls.devhub.common.ui.theme.AzureishWhite
-import com.mrtnmrls.devhub.common.ui.theme.CadetBlue
 import com.mrtnmrls.devhub.common.ui.theme.DevhubTheme
-import com.mrtnmrls.devhub.common.ui.theme.JapaneseIndigo
 import com.mrtnmrls.devhub.common.ui.theme.Typography
 
 @Composable
@@ -47,7 +47,7 @@ fun InstructionsView(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(4.dp))
-                .background(CadetBlue)
+                .background(MaterialTheme.colorScheme.secondaryContainer)
                 .padding(vertical = 8.dp, horizontal = 8.dp)
         ) {
             Row(
@@ -56,12 +56,12 @@ fun InstructionsView(
                 Icon(
                     imageVector = Icons.Default.Info,
                     contentDescription = "Instructions",
-                    tint = AzureishWhite
+                    tint = MaterialTheme.colorScheme.onSecondaryContainer
                 )
                 HorizontalSpacer(8.dp)
                 Text(
                     text = stringResource(R.string.guess_number_instructions),
-                    color = JapaneseIndigo,
+                    color = MaterialTheme.colorScheme.onSecondaryContainer,
                     style = Typography.bodyMedium
                 )
             }
@@ -73,9 +73,19 @@ fun InstructionsView(
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-private fun PreviewInstructionsView() {
+private fun PreviewInstructionsViewDark() {
+    DevhubTheme {
+        Surface {
+            InstructionsView { }
+        }
+    }
+}
+
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Composable
+private fun PreviewInstructionsViewLight() {
     DevhubTheme {
         Surface {
             InstructionsView { }

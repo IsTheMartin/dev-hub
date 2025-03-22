@@ -7,21 +7,18 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -53,12 +50,9 @@ import com.mrtnmrls.devhub.login.presentation.LoginIntent
 import com.mrtnmrls.devhub.landing.presentation.navigateToLandingScreen
 import com.mrtnmrls.devhub.login.presentation.LoginState
 import com.mrtnmrls.devhub.login.presentation.LoginScreenState
-import com.mrtnmrls.devhub.common.ui.theme.Camel
-import com.mrtnmrls.devhub.common.ui.theme.CetaceanBlue
 import com.mrtnmrls.devhub.common.ui.theme.DevhubTheme
-import com.mrtnmrls.devhub.common.ui.theme.Khaki
-import com.mrtnmrls.devhub.common.ui.theme.MetallicBlue
 import com.mrtnmrls.devhub.common.ui.theme.Typography
+import com.mrtnmrls.devhub.common.ui.view.PrimaryButton
 import com.mrtnmrls.devhub.login.presentation.LoginViewModel
 
 @Composable
@@ -67,11 +61,15 @@ internal fun LoginContainer() {
     val loginViewModel = hiltViewModel<LoginViewModel>()
     val state by loginViewModel.state.collectAsStateWithLifecycle()
     var isNetworkConnected by remember { mutableStateOf(false) }
-    LoginScreen(
-        state = state,
-        onIntent = loginViewModel::dispatchIntent,
-        isNetworkConnected = isNetworkConnected
-    )
+    Scaffold(
+        modifier = Modifier.fillMaxSize()
+    ) { _ ->
+        LoginScreen(
+            state = state,
+            onIntent = loginViewModel::dispatchIntent,
+            isNetworkConnected = isNetworkConnected
+        )
+    }
     HandleLoginEffects(state.effect, navController)
     NetworkConnectivityChecker { isNetworkConnected = it }
 }
@@ -108,7 +106,6 @@ private fun LoginErrorView(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.Red)
     ) {}
 }
 
@@ -139,7 +136,6 @@ private fun LoginContentView(
             modifier = modifier
                 .fillMaxSize()
                 .weight(0.8f)
-                .background(Camel)
                 .padding(16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -160,21 +156,14 @@ private fun LoginContentView(
                 password = it
             }
             Spacer(modifier = Modifier.height(16.dp))
-            Button(
+            PrimaryButton(
                 onClick = {
                     onIntent(LoginIntent.OnLogin(email, password))
                 },
                 modifier = Modifier.fillMaxWidth(),
-                enabled = !uiState.isLogIn && isNetworkConnected,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MetallicBlue,
-                    contentColor = Khaki
-                ),
-                shape = RoundedCornerShape(4.dp),
-                contentPadding = PaddingValues(16.dp)
-            ) {
-                Text("Login")
-            }
+                isEnabled = !uiState.isLogIn && isNetworkConnected,
+                buttonText = "Login"
+            )
         }
     }
 }
@@ -182,8 +171,7 @@ private fun LoginContentView(
 @Composable
 private fun LoginHeaderView(modifier: Modifier = Modifier) {
     Box(
-        modifier = modifier
-            .background(MetallicBlue),
+        modifier = modifier,
         contentAlignment = Alignment.BottomStart
     ) {
         Column(
@@ -194,13 +182,13 @@ private fun LoginHeaderView(modifier: Modifier = Modifier) {
             Text(
                 text = "Welcome",
                 style = Typography.displayMedium.copy(fontWeight = FontWeight.Bold),
-                color = Khaki
+                color = MaterialTheme.colorScheme.primary
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = "Please enter your email and password",
                 style = Typography.bodyMedium,
-                color = Khaki
+                color = MaterialTheme.colorScheme.secondary
             )
         }
     }
@@ -229,16 +217,6 @@ private fun EmailTextField(
             }
         ),
         isError = isMissingEmail,
-        colors = TextFieldDefaults.colors(
-            unfocusedContainerColor = Khaki,
-            unfocusedLabelColor = CetaceanBlue,
-            unfocusedTextColor = CetaceanBlue,
-            unfocusedPlaceholderColor = CetaceanBlue,
-            focusedContainerColor = Khaki,
-            focusedLabelColor = CetaceanBlue,
-            focusedPlaceholderColor = CetaceanBlue,
-            focusedTextColor = CetaceanBlue
-        )
     )
 }
 
@@ -263,16 +241,6 @@ private fun PasswordTextField(
             onDone = { keyboardController?.hide() }
         ),
         isError = isMissingPassword,
-        colors = TextFieldDefaults.colors(
-            unfocusedContainerColor = Khaki,
-            unfocusedLabelColor = CetaceanBlue,
-            unfocusedTextColor = CetaceanBlue,
-            unfocusedPlaceholderColor = CetaceanBlue,
-            focusedContainerColor = Khaki,
-            focusedLabelColor = CetaceanBlue,
-            focusedPlaceholderColor = CetaceanBlue,
-            focusedTextColor = CetaceanBlue,
-        )
     )
 }
 

@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
@@ -23,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -34,10 +36,7 @@ import com.mrtnmrls.devhub.common.ui.view.PrimaryButton
 import com.mrtnmrls.devhub.common.ui.view.SecondaryButton
 import com.mrtnmrls.devhub.common.ui.view.VerticalSpacer
 import com.mrtnmrls.devhub.guessnumber.presentation.GuessNumberEvent
-import com.mrtnmrls.devhub.common.ui.theme.AzureishWhite
-import com.mrtnmrls.devhub.common.ui.theme.CadetBlue
 import com.mrtnmrls.devhub.common.ui.theme.DevhubTheme
-import com.mrtnmrls.devhub.common.ui.theme.JapaneseIndigo
 import com.mrtnmrls.devhub.common.ui.theme.Typography
 
 @Composable
@@ -63,7 +62,7 @@ internal fun GameInProgressView(
     ) {
         Text(
             text = stringResource(R.string.guess_number_current_attempts, attempts),
-            color = JapaneseIndigo,
+            color = MaterialTheme.colorScheme.primary,
             style = Typography.titleMedium,
             fontWeight = FontWeight.Bold
         )
@@ -82,13 +81,13 @@ internal fun GameInProgressView(
         VerticalSpacer(12.dp)
         Text(
             text = feedback,
-            color = JapaneseIndigo
+            color = MaterialTheme.colorScheme.secondary
         )
         VerticalSpacer(12.dp)
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(CadetBlue)
+                .background(MaterialTheme.colorScheme.secondaryContainer)
                 .height(100.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             reverseLayout = true,
@@ -145,17 +144,7 @@ private fun InputField(
         ),
         keyboardActions = KeyboardActions(
             onDone = { onDone() }
-        ),
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedContainerColor = AzureishWhite,
-            focusedTextColor = JapaneseIndigo,
-            focusedLabelColor = JapaneseIndigo,
-            unfocusedContainerColor = AzureishWhite,
-            unfocusedTextColor = JapaneseIndigo,
-            unfocusedLabelColor = JapaneseIndigo,
-            cursorColor = JapaneseIndigo,
-            focusedBorderColor = JapaneseIndigo
-        ),
+        )
     )
 }
 

@@ -10,6 +10,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.mrtnmrls.devhub.common.ui.compositionlocal.LocalActivity
 import com.mrtnmrls.devhub.common.ui.compositionlocal.LocalNavController
 import com.mrtnmrls.devhub.common.ui.view.DevHubContainer
 import com.mrtnmrls.devhub.common.ui.theme.DevhubTheme
@@ -23,8 +24,13 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
-            DevhubTheme {
-                CompositionLocalProvider(LocalNavController provides navController) {
+            DevhubTheme(
+                dynamicColor = false
+            ) {
+                CompositionLocalProvider(
+                    LocalNavController provides navController,
+                    LocalActivity provides this@MainActivity
+                ) {
                     Surface(
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background

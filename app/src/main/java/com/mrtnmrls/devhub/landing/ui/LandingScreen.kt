@@ -1,5 +1,9 @@
 package com.mrtnmrls.devhub.landing.ui
 
+import android.content.res.Configuration.UI_MODE_NIGHT_NO
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -8,7 +12,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -19,12 +23,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.mrtnmrls.devhub.common.ui.compositionlocal.LocalActivity
 import com.mrtnmrls.devhub.common.ui.compositionlocal.LocalNavController
 import com.mrtnmrls.devhub.common.ui.view.BottomAppBarView
 import com.mrtnmrls.devhub.login.ui.ProfileDialog
@@ -39,8 +44,6 @@ import com.mrtnmrls.devhub.landing.presentation.navigateToPullToRefreshScreen
 import com.mrtnmrls.devhub.landing.presentation.navigateToTodoListScreen
 import com.mrtnmrls.devhub.landing.presentation.LandingState
 import com.mrtnmrls.devhub.landing.presentation.ProfileDialogState
-import com.mrtnmrls.devhub.common.ui.theme.AzureishWhite
-import com.mrtnmrls.devhub.common.ui.theme.CadetBlue
 import com.mrtnmrls.devhub.common.ui.theme.DevhubTheme
 import com.mrtnmrls.devhub.landing.presentation.LandingViewModel
 import com.mrtnmrls.devhub.landing.presentation.navigateToLazyMindMapScreen
@@ -89,7 +92,7 @@ fun LandingScreen(
     onIntent: (DevHubRouteIntent) -> Unit,
     onLandingIntent: (LandingIntent) -> Unit
 ) {
-
+    val activity = LocalActivity.current
     var isProfileDialogVisible by remember { mutableStateOf(false) }
 
     Scaffold(
@@ -102,10 +105,13 @@ fun LandingScreen(
         },
         bottomBar = { BottomAppBarView() }
     ) { paddingValues ->
+        activity.enableEdgeToEdge(
+            navigationBarStyle = SystemBarStyle.dark(MaterialTheme.colorScheme.secondaryContainer.toArgb())
+        )
         LazyVerticalGrid(
             modifier = Modifier
                 .fillMaxSize()
-                .background(AzureishWhite)
+                .background(MaterialTheme.colorScheme.background)
                 .padding(paddingValues),
             columns = GridCells.Fixed(2)
         ) {
@@ -163,20 +169,34 @@ private fun LandingButton(
         modifier = modifier
             .padding(horizontal = 16.dp, vertical = 8.dp),
         onClick = onClick,
-        shape = RoundedCornerShape(4.dp),
-        colors = ButtonColors(
-            containerColor = CadetBlue,
-            contentColor = Color.Black,
-            disabledContentColor = Color.Black,
-            disabledContainerColor = Color.Gray
-        )
+        shape = RoundedCornerShape(4.dp)
     ) {
         Text(text = text)
     }
 
-@Preview
+@Preview(
+    uiMode = UI_MODE_NIGHT_YES,
+    showSystemUi = true
+)
 @Composable
-private fun PreviewLandingScreen() {
+private fun PreviewLandingScreenDark() {
+    DevhubTheme {
+        Surface {
+            LandingScreen(
+                state = LandingState(),
+                onIntent = { },
+                onLandingIntent = { }
+            )
+        }
+    }
+}
+
+@Preview(
+    uiMode = UI_MODE_NIGHT_NO,
+    showSystemUi = true
+)
+@Composable
+private fun PreviewLandingScreenLight() {
     DevhubTheme {
         Surface {
             LandingScreen(
