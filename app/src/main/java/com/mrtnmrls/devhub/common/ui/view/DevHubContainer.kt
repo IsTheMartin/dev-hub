@@ -4,11 +4,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.mrtnmrls.devhub.common.ui.compositionlocal.LocalNavController
-import com.mrtnmrls.devhub.landing.presentation.DevHubRoute
 import com.mrtnmrls.devhub.esp8266.ui.Esp8266Container
 import com.mrtnmrls.devhub.guessnumber.ui.GuessNumberContainer
+import com.mrtnmrls.devhub.landing.presentation.Esp8266Screen
+import com.mrtnmrls.devhub.landing.presentation.GuessNumberScreen
+import com.mrtnmrls.devhub.landing.presentation.LandingScreen
+import com.mrtnmrls.devhub.landing.presentation.LazyMindMapScreen
+import com.mrtnmrls.devhub.landing.presentation.LoginScreen
+import com.mrtnmrls.devhub.landing.presentation.PullToRefreshScreen
+import com.mrtnmrls.devhub.landing.presentation.TodoListScreen
 import com.mrtnmrls.devhub.landing.ui.LandingContainer
 import com.mrtnmrls.devhub.lazymindmap.ui.LazyMindMapContainer
 import com.mrtnmrls.devhub.login.ui.LoginContainer
@@ -22,27 +27,27 @@ fun DevHubContainer() {
     NavHost(
         modifier = Modifier,
         navController = navController,
-        startDestination = DevHubRoute.Login.route
+        startDestination = LoginScreen
     ) {
-        composable(DevHubRoute.Login.route) {
+        composable<LoginScreen> {
             LoginContainer()
         }
-        composable(DevHubRoute.Landing.route) {
+        composable<LandingScreen> {
             LandingContainer()
         }
-        composable(DevHubRoute.PullToRefresh.route) {
+        composable<PullToRefreshScreen> {
             PullToRefreshContainer()
         }
-        composable(DevHubRoute.ChristmasLights.route) {
+        composable<Esp8266Screen> {
             Esp8266Container()
         }
-        composable(DevHubRoute.TodoList.route) {
+        composable<TodoListScreen> {
             TodoListContainer()
         }
-        composable(DevHubRoute.GuessNumber.route) {
+        composable<GuessNumberScreen> {
             GuessNumberContainer()
         }
-        composable(DevHubRoute.LazyMindMap.route) {
+        composable<LazyMindMapScreen> {
             LazyMindMapContainer()
         }
     }

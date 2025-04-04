@@ -47,12 +47,13 @@ import com.mrtnmrls.devhub.common.ui.compositionlocal.LocalNavController
 import com.mrtnmrls.devhub.common.ui.view.LoadingLottieView
 import com.mrtnmrls.devhub.login.presentation.LoginEffect
 import com.mrtnmrls.devhub.login.presentation.LoginIntent
-import com.mrtnmrls.devhub.landing.presentation.navigateToLandingScreen
 import com.mrtnmrls.devhub.login.presentation.LoginState
 import com.mrtnmrls.devhub.login.presentation.LoginScreenState
 import com.mrtnmrls.devhub.common.ui.theme.DevhubTheme
 import com.mrtnmrls.devhub.common.ui.theme.Typography
 import com.mrtnmrls.devhub.common.ui.view.PrimaryButton
+import com.mrtnmrls.devhub.landing.presentation.LandingScreen
+import com.mrtnmrls.devhub.landing.presentation.LoginScreen
 import com.mrtnmrls.devhub.login.presentation.LoginViewModel
 
 @Composable
@@ -79,7 +80,10 @@ private fun HandleLoginEffects(effect: LoginEffect, navController: NavHostContro
     LaunchedEffect(effect) {
         when (effect) {
             LoginEffect.NoOp -> Unit
-            LoginEffect.OnSuccessfulLogin -> navigateToLandingScreen(navController)
+            LoginEffect.OnSuccessfulLogin -> navController.navigate(LandingScreen) {
+                launchSingleTop = true
+                popUpTo(LoginScreen) { inclusive = true }
+            }
         }
     }
 }

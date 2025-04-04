@@ -16,6 +16,7 @@ googleGson = "2.11.0"
 firebaseBom = "32.1.0"
 firebaseAuth = "22.1.2"
 jetbrainsKotlinJvm = "1.9.23"
+serialization = "1.6.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -41,6 +42,7 @@ google-gson = { group = "com.google.code.gson", name = "gson", version.ref = "go
 google-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 google-firebase-database = { group = "com.google.firebase", name = "firebase-database-ktx" }
 google-firebase-auth = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuth"}
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -50,4 +52,5 @@ kotlin-kapt = { id = "kotlin-kapt" }
 google-services = { id = "com.google.gms.google-services" }
 detekt = { id = "io.gitlab.arturbosch.detekt" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+kotlin-serialization = { id= "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 

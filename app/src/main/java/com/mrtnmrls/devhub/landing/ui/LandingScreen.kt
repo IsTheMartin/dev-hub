@@ -37,16 +37,16 @@ import com.mrtnmrls.devhub.login.ui.TopAppBarView
 import com.mrtnmrls.devhub.landing.presentation.LandingEffect
 import com.mrtnmrls.devhub.landing.presentation.DevHubRouteIntent
 import com.mrtnmrls.devhub.landing.presentation.LandingIntent
-import com.mrtnmrls.devhub.landing.presentation.DevHubRoute
-import com.mrtnmrls.devhub.landing.presentation.navigateToChristmasLightsScreen
-import com.mrtnmrls.devhub.landing.presentation.navigateToGuessNumberScreen
-import com.mrtnmrls.devhub.landing.presentation.navigateToPullToRefreshScreen
-import com.mrtnmrls.devhub.landing.presentation.navigateToTodoListScreen
 import com.mrtnmrls.devhub.landing.presentation.LandingState
 import com.mrtnmrls.devhub.landing.presentation.ProfileDialogState
 import com.mrtnmrls.devhub.common.ui.theme.DevhubTheme
+import com.mrtnmrls.devhub.landing.presentation.Esp8266Screen
+import com.mrtnmrls.devhub.landing.presentation.GuessNumberScreen
 import com.mrtnmrls.devhub.landing.presentation.LandingViewModel
-import com.mrtnmrls.devhub.landing.presentation.navigateToLazyMindMapScreen
+import com.mrtnmrls.devhub.landing.presentation.LazyMindMapScreen
+import com.mrtnmrls.devhub.landing.presentation.LoginScreen
+import com.mrtnmrls.devhub.landing.presentation.PullToRefreshScreen
+import com.mrtnmrls.devhub.landing.presentation.TodoListScreen
 
 @Composable
 fun LandingContainer() {
@@ -63,11 +63,11 @@ fun LandingContainer() {
 
 fun handleLandingIntents(intent: DevHubRouteIntent, navController: NavHostController) {
     when (intent) {
-        DevHubRouteIntent.OnESP8266Clicked -> navigateToChristmasLightsScreen(navController)
-        DevHubRouteIntent.OnPullToRefreshClicked -> navigateToPullToRefreshScreen(navController)
-        DevHubRouteIntent.OnTodoListClicked -> navigateToTodoListScreen(navController)
-        DevHubRouteIntent.OnGuessNumberClicked -> navigateToGuessNumberScreen(navController)
-        DevHubRouteIntent.OnLazyMindMapClicked -> navigateToLazyMindMapScreen(navController)
+        DevHubRouteIntent.OnESP8266Clicked -> navController.navigate(Esp8266Screen)
+        DevHubRouteIntent.OnPullToRefreshClicked -> navController.navigate(PullToRefreshScreen)
+        DevHubRouteIntent.OnTodoListClicked -> navController.navigate(TodoListScreen)
+        DevHubRouteIntent.OnGuessNumberClicked -> navController.navigate(GuessNumberScreen)
+        DevHubRouteIntent.OnLazyMindMapClicked -> navController.navigate(LazyMindMapScreen)
     }
 }
 
@@ -77,7 +77,7 @@ fun HandleLandingEffects(effect: LandingEffect, navController: NavHostController
         when (effect) {
             LandingEffect.NoOp -> Unit
             LandingEffect.OnSuccessfulSignOut -> {
-                navController.navigate(DevHubRoute.Login.route) {
+                navController.navigate(LoginScreen) {
                     popUpTo(0) { inclusive = true }
                     launchSingleTop = true
                 }

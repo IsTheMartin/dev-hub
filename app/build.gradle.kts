@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.dagger.hilt)
     id(libs.plugins.google.services.get().pluginId)
     id(libs.plugins.detekt.get().pluginId)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -72,6 +73,7 @@ dependencies {
     implementation (platform(libs.google.firebase.bom))
     implementation (libs.google.firebase.database)
     implementation (libs.google.firebase.auth)
+    implementation (libs.kotlinx.serialization.json)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
