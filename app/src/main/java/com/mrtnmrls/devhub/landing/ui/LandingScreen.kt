@@ -47,6 +47,7 @@ import com.mrtnmrls.devhub.landing.presentation.LazyMindMapScreen
 import com.mrtnmrls.devhub.landing.presentation.LoginScreen
 import com.mrtnmrls.devhub.landing.presentation.PullToRefreshScreen
 import com.mrtnmrls.devhub.landing.presentation.TodoListScreen
+import com.mrtnmrls.devhub.landing.presentation.WebScraperScreen
 
 @Composable
 fun LandingContainer() {
@@ -68,6 +69,7 @@ fun handleLandingIntents(intent: DevHubRouteIntent, navController: NavHostContro
         DevHubRouteIntent.OnTodoListClicked -> navController.navigate(TodoListScreen)
         DevHubRouteIntent.OnGuessNumberClicked -> navController.navigate(GuessNumberScreen)
         DevHubRouteIntent.OnLazyMindMapClicked -> navController.navigate(LazyMindMapScreen)
+        DevHubRouteIntent.OnWebScraperClicked -> navController.navigate(WebScraperScreen)
     }
 }
 
@@ -138,6 +140,11 @@ fun LandingScreen(
             item {
                 LandingButton(text = "Lazy mind map") {
                     onIntent(DevHubRouteIntent.OnLazyMindMapClicked)
+                }
+            }
+            item {
+                LandingButton(text = "Web scraper") {
+                    onIntent(DevHubRouteIntent.OnWebScraperClicked)
                 }
             }
         }

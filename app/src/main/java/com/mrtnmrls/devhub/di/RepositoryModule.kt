@@ -18,6 +18,9 @@ import com.mrtnmrls.devhub.guessnumber.data.repository.GuessNumberRepositoryImpl
 import com.mrtnmrls.devhub.guessnumber.domain.repository.GuessNumberRepository
 import com.mrtnmrls.devhub.todolist.data.repository.InMemoryTaskRepositoryImpl
 import com.mrtnmrls.devhub.todolist.domain.repository.TaskRepository
+import com.mrtnmrls.devhub.webscraping.data.remote.WebScraperService
+import com.mrtnmrls.devhub.webscraping.data.repository.WebScraperRepositoryImpl
+import com.mrtnmrls.devhub.webscraping.domain.repository.WebScraperRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -89,5 +92,17 @@ object RepositoryModule {
     @Singleton
     fun provideGuessNumberRepository(): GuessNumberRepository {
         return GuessNumberRepositoryImpl()
+    }
+
+    @Provides
+    @Singleton
+    fun provideWebScraperService(): WebScraperService {
+        return WebScraperService()
+    }
+
+    @Provides
+    @Singleton
+    fun provideWebScraperRepository(webScraperService: WebScraperService): WebScraperRepository {
+        return WebScraperRepositoryImpl(webScraperService)
     }
 }

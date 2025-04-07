@@ -17,6 +17,7 @@ firebaseBom = "32.1.0"
 firebaseAuth = "22.1.2"
 jetbrainsKotlinJvm = "1.9.23"
 serialization = "1.6.3"
+jsoup = "1.19.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -43,6 +44,8 @@ google-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", ve
 google-firebase-database = { group = "com.google.firebase", name = "firebase-database-ktx" }
 google-firebase-auth = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuth"}
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization"}
+jsoup = { group = "org.jsoup", name = "jsoup", version.ref = "jsoup" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

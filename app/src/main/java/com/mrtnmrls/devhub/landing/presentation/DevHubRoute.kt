@@ -22,3 +22,6 @@ object GuessNumberScreen
 
 @Serializable
 object LazyMindMapScreen
+
+@Serializable
+object WebScraperScreen
